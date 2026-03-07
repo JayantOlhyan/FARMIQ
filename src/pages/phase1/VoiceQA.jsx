@@ -44,7 +44,7 @@ export default function VoiceQA() {
 
             recognitionRef.current.onerror = () => {
                 setIsListening(false);
-                setError(t("errorVoiceNotSupported"));
+                setError("आवाज़ पहचान उपलब्ध नहीं है — कृपया सवाल टाइप करें");
             };
         }
     }, []);
@@ -56,7 +56,7 @@ export default function VoiceQA() {
             if (transcript) handleAskGemini(transcript);
         } else {
             if (!recognitionRef.current) {
-                setError(t("errorVoiceNotSupported"));
+                setError("आवाज़ पहचान उपलब्ध नहीं है — कृपया सवाल टाइप करें");
                 return;
             }
             setTranscript("");
@@ -83,8 +83,14 @@ export default function VoiceQA() {
                 state: "उत्तर प्रदेश",
                 month: monthNames[new Date().getMonth()],
             });
-            const res = await askGemini(prompt, PROMPT_P1_VOICE_QA.system);
+            const res = await askGemini(prompt, PROMPT_P1_VOICE_QA.system, null, {
+                maxRetries: 3,
+                onRetry: (attempt, max) => {
+                    setError(`फिर से कोशिश कर रहे हैं... (${attempt}/${max})`);
+                },
+            });
             setAnswer(res);
+            setError("");
 
             // Text-to-speech
             if ("speechSynthesis" in window) {
@@ -94,11 +100,8 @@ export default function VoiceQA() {
                 window.speechSynthesis.speak(utterance);
             }
         } catch (err) {
-            if (err.message === "NO_API_KEY") {
-                setError(t("errorNoApiKey"));
-            } else {
-                setError(t("errorGeminiTimeout"));
-            }
+            // Error message is already in Hindi from askGemini
+            setError(err.message);
         }
         setLoading(false);
     };

@@ -17,15 +17,15 @@ export default function BottomTabBar() {
                         key={to}
                         to={to}
                         className={({ isActive }) =>
-                            `flex flex-col items-center justify-center gap-1 min-w-[64px] min-h-[64px] no-underline transition-colors ${isActive ? "text-[#1B5E3B]" : "text-[#999]"
+                            `flex flex-col items-center justify-center gap-1 min-w-[64px] min-h-[64px] no-underline transition-colors active:scale-95 ${isActive ? "text-[#1B5E3B]" : "text-[#999]"
                             }`
                         }
                     >
                         {({ isActive }) => (
                             <>
-                                <Icon size={24} strokeWidth={isActive ? 2.5 : 1.8} />
+                                <Icon size={26} strokeWidth={isActive ? 2.5 : 1.8} />
                                 <span
-                                    className="text-[11px]"
+                                    className="text-[13px]"
                                     style={{
                                         fontFamily: "var(--font-hindi)",
                                         fontWeight: isActive ? 700 : 400,

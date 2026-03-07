@@ -1,22 +1,44 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
+import { lazy, Suspense } from "react";
 import useStore from "./store/useStore";
 import "./lib/i18n";
 
-// Common
+// Common (always loaded)
 import BottomTabBar from "./components/common/BottomTabBar";
 import TriColorFooter from "./components/common/TriColorFooter";
+import OfflineBanner from "./components/common/OfflineBanner";
 
-// Pages
-import OnboardingScreen from "./pages/phase1/OnboardingScreen";
-import HomeScreen from "./pages/phase1/HomeP1";
-import CropDetail from "./pages/phase1/CropDetail";
-import CropSelect from "./pages/phase1/CropSelect";
-import MandiRates from "./pages/phase1/MandiP1";
-import WeatherDiary from "./pages/phase1/WeatherDiary";
-import Statistics from "./pages/phase1/Statistics";
-import Settings from "./pages/phase1/Settings";
-import VoiceQA from "./pages/phase1/VoiceQA";
+// Route-based code splitting (Fix #6)
+const OnboardingScreen = lazy(() => import("./pages/phase1/OnboardingScreen"));
+const HomeScreen = lazy(() => import("./pages/phase1/HomeP1"));
+const CropDetail = lazy(() => import("./pages/phase1/CropDetail"));
+const CropSelect = lazy(() => import("./pages/phase1/CropSelect"));
+const MandiRates = lazy(() => import("./pages/phase1/MandiP1"));
+const WeatherDiary = lazy(() => import("./pages/phase1/WeatherDiary"));
+const Statistics = lazy(() => import("./pages/phase1/Statistics"));
+const Settings = lazy(() => import("./pages/phase1/Settings"));
+const VoiceQA = lazy(() => import("./pages/phase1/VoiceQA"));
+
+// Loading spinner for Suspense fallback
+function LoadingFallback() {
+  return (
+    <div className="flex items-center justify-center min-h-screen" style={{ backgroundColor: "var(--color-light-green-bg)" }}>
+      <div className="text-center">
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+          className="text-4xl mb-3"
+        >
+          🌾
+        </motion.div>
+        <p className="text-[14px] text-[#666]" style={{ fontFamily: "var(--font-hindi)" }}>
+          लोड हो रहा है...
+        </p>
+      </div>
+    </div>
+  );
+}
 
 function AppLayout({ children }) {
   return (
@@ -41,9 +63,21 @@ function PageWrap({ children }) {
   );
 }
 
-function AppRoutes() {
-  const { onboardingComplete } = useStore();
+const LanguageSelection = lazy(() => import("./pages/phase1/LanguageSelection"));
 
+function AppRoutes() {
+  const { onboardingComplete, languageSelected, selectLanguage } = useStore();
+
+  // Step 1: Language selection (first launch only)
+  if (!languageSelected) {
+    return (
+      <Routes>
+        <Route path="*" element={<LanguageSelection onSelect={selectLanguage} />} />
+      </Routes>
+    );
+  }
+
+  // Step 2: Onboarding
   if (!onboardingComplete) {
     return (
       <Routes>
@@ -52,6 +86,7 @@ function AppRoutes() {
     );
   }
 
+  // Step 3: Main app
   return (
     <AnimatePresence mode="wait">
       <Routes>
@@ -73,7 +108,10 @@ function AppRoutes() {
 export default function App() {
   return (
     <Router>
-      <AppRoutes />
+      <OfflineBanner />
+      <Suspense fallback={<LoadingFallback />}>
+        <AppRoutes />
+      </Suspense>
     </Router>
   );
 }

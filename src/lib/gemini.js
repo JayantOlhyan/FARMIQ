@@ -2,32 +2,113 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 
 // ============================================
 // FarmIQ Gemini API Client — Section 4.3 + Section 7
-// Reads API key from env variable (for deployment) or localStorage (user override)
+// Full Hindi error handling + Exponential backoff retry
 // ============================================
+
+// Hindi error messages (Section 3.2 of Improvement Doc)
+export const GEMINI_ERRORS = {
+    RATE_LIMIT: "बहुत सारे सवाल आ रहे हैं, 1 मिनट में फिर पूछें 🙏",
+    NO_API_KEY: "Settings में API key डालें — Settings > Gemini Key",
+    OFFLINE: "Internet नहीं है — बाद में पूछें",
+    GENERIC: "कुछ गड़बड़ हुई — थोड़ी देर बाद फिर कोशिश करें",
+    BLURRY_IMAGE: "फोटो साफ नहीं है, फिर से खींचें",
+    RETRY_STATUS: (attempt, max) => `फिर से कोशिश कर रहे हैं... (${attempt}/${max})`,
+};
 
 export function getGeminiClient() {
     const apiKey = import.meta.env.VITE_GEMINI_API_KEY || localStorage.getItem("farmiq_gemini_key");
-    if (!apiKey) throw new Error("NO_API_KEY");
+    if (!apiKey) {
+        const err = new Error(GEMINI_ERRORS.NO_API_KEY);
+        err.code = "NO_API_KEY";
+        throw err;
+    }
     return new GoogleGenerativeAI(apiKey);
 }
 
-export async function askGemini(prompt, systemPrompt = "", imageBase64 = null) {
-    const client = getGeminiClient();
-    const model = client.getGenerativeModel({ model: "gemini-1.5-pro" });
+/**
+ * Classify an error into a Hindi message
+ */
+function getHindiError(error) {
+    const msg = error?.message || "";
+    const status = error?.status || error?.httpStatus || 0;
 
-    const parts = [{ text: prompt }];
-    if (imageBase64) {
-        parts.unshift({
-            inlineData: { data: imageBase64, mimeType: "image/jpeg" },
-        });
+    // Offline
+    if (!navigator.onLine || msg.includes("Failed to fetch") || msg.includes("NetworkError")) {
+        return GEMINI_ERRORS.OFFLINE;
+    }
+    // Rate limit
+    if (status === 429 || msg.includes("429") || msg.includes("quota") || msg.includes("rate")) {
+        return GEMINI_ERRORS.RATE_LIMIT;
+    }
+    // Missing API key
+    if (error.code === "NO_API_KEY" || msg.includes("API key")) {
+        return GEMINI_ERRORS.NO_API_KEY;
+    }
+    return GEMINI_ERRORS.GENERIC;
+}
+
+/**
+ * Sleep helper for retry backoff
+ */
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+/**
+ * Ask Gemini with full error handling + exponential backoff retry (2s, 4s, 8s)
+ * @param {string} prompt - User prompt
+ * @param {string} systemPrompt - System instruction
+ * @param {string|null} imageBase64 - Optional base64 image for Vision
+ * @param {object} options - { maxRetries: 3, onRetry: (attempt, max) => {} }
+ * @returns {Promise<string>} - AI response text
+ * @throws {Error} - Error with Hindi message
+ */
+export async function askGemini(prompt, systemPrompt = "", imageBase64 = null, options = {}) {
+    const { maxRetries = 3, onRetry = null } = options;
+
+    // Pre-flight: check online status
+    if (!navigator.onLine) {
+        throw new Error(GEMINI_ERRORS.OFFLINE);
     }
 
-    const result = await model.generateContent({
-        contents: [{ role: "user", parts }],
-        systemInstruction: systemPrompt,
-        generationConfig: { temperature: 0.3, maxOutputTokens: 1024 },
-    });
-    return result.response.text();
+    let lastError;
+
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+        try {
+            const client = getGeminiClient();
+            const model = client.getGenerativeModel({ model: "gemini-1.5-pro" });
+
+            const parts = [{ text: prompt }];
+            if (imageBase64) {
+                parts.unshift({
+                    inlineData: { data: imageBase64, mimeType: "image/jpeg" },
+                });
+            }
+
+            const result = await model.generateContent({
+                contents: [{ role: "user", parts }],
+                systemInstruction: systemPrompt,
+                generationConfig: { temperature: 0.3, maxOutputTokens: 1024 },
+            });
+            return result.response.text();
+        } catch (error) {
+            lastError = error;
+            const hindiMsg = getHindiError(error);
+
+            // Don't retry on non-retryable errors
+            if (error.code === "NO_API_KEY" || hindiMsg === GEMINI_ERRORS.NO_API_KEY) {
+                throw new Error(hindiMsg);
+            }
+
+            // If we have retries left and error is retryable
+            if (attempt < maxRetries) {
+                const backoffMs = Math.pow(2, attempt) * 1000; // 2s, 4s, 8s
+                if (onRetry) onRetry(attempt, maxRetries);
+                await sleep(backoffMs);
+            }
+        }
+    }
+
+    // All retries exhausted
+    throw new Error(getHindiError(lastError));
 }
 
 // ============================================

@@ -7,6 +7,7 @@ const useStore = create(
             // ---- User Preferences ----
             userMode: "phase1", // "phase1" | "phase2"
             selectedLanguage: "hi",
+            languageSelected: false,
             onboardingComplete: false,
 
             // ---- Farm Profile (Phase 2) ----
@@ -50,6 +51,11 @@ const useStore = create(
             },
 
             setLanguage: (lang) => set({ selectedLanguage: lang }),
+
+            selectLanguage: (lang) => {
+                localStorage.setItem("farmiq_lang", lang);
+                set({ selectedLanguage: lang, languageSelected: true });
+            },
 
             completeOnboarding: () => set({ onboardingComplete: true }),
 
@@ -103,6 +109,7 @@ const useStore = create(
             partialize: (state) => ({
                 userMode: state.userMode,
                 selectedLanguage: state.selectedLanguage,
+                languageSelected: state.languageSelected,
                 onboardingComplete: state.onboardingComplete,
                 farmProfile: state.farmProfile,
                 myCrops: state.myCrops,
