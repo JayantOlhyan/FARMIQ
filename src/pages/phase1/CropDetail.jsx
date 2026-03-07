@@ -1,8 +1,10 @@
-import React, { useState } from "react";
-import { motion } from "framer-motion";
+import React, { useState, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { useParams, useNavigate } from "react-router-dom";
-import { Star, Minus, Plus } from "lucide-react";
+import { Star, Minus, Plus, Camera, Share2 } from "lucide-react";
 import PageHeader from "../../components/common/Header";
+import { askGemini, PROMPT_P1_PEST_PHOTO } from "../../lib/gemini";
+import { sharePestDiagnosis } from "../../lib/share";
 
 const cropData = {
     wheat: {
@@ -38,6 +40,45 @@ export default function CropDetail() {
     const navigate = useNavigate();
     const crop = cropData[id] || cropData.wheat;
     const [qty, setQty] = useState(1);
+    const fileInputRef = useRef(null);
+    const [pestPhoto, setPestPhoto] = useState(null);
+    const [pestResult, setPestResult] = useState("");
+    const [pestLoading, setPestLoading] = useState(false);
+    const [pestError, setPestError] = useState("");
+
+    // Sprint 2, Fix #3: Pest photo diagnosis
+    const handlePestPhoto = async (e) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        // Convert to base64
+        const reader = new FileReader();
+        reader.onload = async () => {
+            const base64 = reader.result.split(",")[1];
+            setPestPhoto(reader.result);
+            setPestLoading(true);
+            setPestError("");
+            setPestResult("");
+
+            try {
+                const monthNames = [
+                    "जनवरी", "फरवरी", "मार्च", "अप्रैल", "मई", "जून",
+                    "जुलाई", "अगस्त", "सितंबर", "अक्टूबर", "नवंबर", "दिसंबर",
+                ];
+                const prompt = PROMPT_P1_PEST_PHOTO.user({
+                    cropName: crop.name,
+                    state: "उत्तर प्रदेश",
+                    month: monthNames[new Date().getMonth()],
+                });
+                const result = await askGemini(prompt, PROMPT_P1_PEST_PHOTO.system, base64, { maxRetries: 2 });
+                setPestResult(result);
+            } catch (err) {
+                setPestError(err.message);
+            }
+            setPestLoading(false);
+        };
+        reader.readAsDataURL(file);
+    };
 
     return (
         <div className="pb-[100px] bg-white min-h-screen">
@@ -46,7 +87,7 @@ export default function CropDetail() {
             {/* Crop image */}
             <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="px-5 py-3">
                 <div className="w-full h-[200px] rounded-[16px] overflow-hidden">
-                    <img src={crop.img} alt={crop.name} className="w-full h-full object-cover" />
+                    <img src={crop.img} alt={crop.name} className="w-full h-full object-cover" loading="lazy" />
                 </div>
             </motion.div>
 
@@ -54,7 +95,7 @@ export default function CropDetail() {
             <div className="flex gap-2 px-5 mb-4 overflow-x-auto hide-scrollbar">
                 {[crop.img, ...crop.related.slice(0, 4)].map((img, i) => (
                     <div key={i} className={`w-[52px] h-[52px] rounded-[10px] overflow-hidden flex-shrink-0 border-2 ${i === 0 ? "border-[#1B5E3B]" : "border-transparent"}`}>
-                        <img src={img} alt="" className="w-full h-full object-cover" />
+                        <img src={img} alt="" className="w-full h-full object-cover" loading="lazy" />
                     </div>
                 ))}
             </div>
@@ -85,6 +126,79 @@ export default function CropDetail() {
                     </div>
                 </div>
 
+                {/* Sprint 2, Fix #3: Pest Photo Diagnosis */}
+                <div className="farmiq-card p-4 mb-4">
+                    <h3 className="text-[16px] font-bold text-[#1A1A1A] mb-3" style={{ fontFamily: "var(--font-hindi)" }}>
+                        🔍 कीड़ा/बीमारी पहचानें
+                    </h3>
+                    <input
+                        type="file"
+                        accept="image/*"
+                        capture="environment"
+                        ref={fileInputRef}
+                        onChange={handlePestPhoto}
+                        className="hidden"
+                    />
+                    <button
+                        onClick={() => fileInputRef.current?.click()}
+                        className="w-full h-[52px] rounded-[14px] bg-[#FFF3E0] text-[#FF6200] font-bold text-[15px] flex items-center justify-center gap-2 active:scale-95 transition-transform border-2 border-dashed border-[#FF6200]/30"
+                        style={{ fontFamily: "var(--font-hindi)" }}
+                    >
+                        <Camera size={20} />
+                        📷 फोटो दिखाकर पहचानें
+                    </button>
+
+                    {/* Photo preview */}
+                    <AnimatePresence>
+                        {pestPhoto && (
+                            <motion.div
+                                initial={{ opacity: 0, height: 0 }}
+                                animate={{ opacity: 1, height: "auto" }}
+                                className="mt-3"
+                            >
+                                <img src={pestPhoto} alt="pest" className="w-full h-[150px] object-cover rounded-[12px]" />
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+
+                    {/* Loading */}
+                    {pestLoading && (
+                        <div className="flex items-center justify-center gap-2 mt-3 py-3">
+                            <motion.span animate={{ rotate: 360 }} transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }} className="text-xl">🔍</motion.span>
+                            <span className="text-[14px] text-[#666]" style={{ fontFamily: "var(--font-hindi)" }}>जांच हो रही है...</span>
+                        </div>
+                    )}
+
+                    {/* Error */}
+                    {pestError && (
+                        <div className="mt-3 px-3 py-2 rounded-[10px] bg-red-50 text-red-700 text-[13px]" style={{ fontFamily: "var(--font-hindi)" }}>
+                            {pestError}
+                        </div>
+                    )}
+
+                    {/* Result */}
+                    <AnimatePresence>
+                        {pestResult && (
+                            <motion.div
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                className="mt-3 p-4 rounded-[12px] bg-[#F0F7F2]"
+                            >
+                                <p className="text-[14px] text-[#1A1A1A] leading-[1.8] whitespace-pre-wrap" style={{ fontFamily: "var(--font-hindi)" }}>
+                                    {pestResult}
+                                </p>
+                                <button
+                                    onClick={() => sharePestDiagnosis(crop.name, pestResult)}
+                                    className="mt-3 w-full h-[44px] rounded-[10px] bg-[#25D366] text-white font-bold text-[14px] flex items-center justify-center gap-2 active:scale-95 transition-transform"
+                                    style={{ fontFamily: "var(--font-hindi)" }}
+                                >
+                                    <Share2 size={16} /> WhatsApp पर भेजें
+                                </button>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+                </div>
+
                 {/* जानकारी */}
                 <div className="mb-4">
                     <h3 className="text-[16px] font-bold text-[#1A1A1A] mb-2" style={{ fontFamily: "var(--font-hindi)" }}>जानकारी</h3>
@@ -100,7 +214,7 @@ export default function CropDetail() {
                     <div className="flex gap-3 overflow-x-auto hide-scrollbar">
                         {crop.related.map((img, i) => (
                             <div key={i} className="w-[70px] h-[70px] rounded-[12px] overflow-hidden flex-shrink-0">
-                                <img src={img} alt="" className="w-full h-full object-cover" />
+                                <img src={img} alt="" className="w-full h-full object-cover" loading="lazy" />
                             </div>
                         ))}
                     </div>

@@ -111,6 +111,61 @@ export async function askGemini(prompt, systemPrompt = "", imageBase64 = null, o
     throw new Error(getHindiError(lastError));
 }
 
+/**
+ * Sprint 2, Fix #1 — Conversational Memory for Voice Q&A
+ * Supports a 5-message sliding window for multi-turn conversation.
+ * @param {string} prompt - Current user prompt
+ * @param {string} systemPrompt - System instruction
+ * @param {Array} history - Array of { role: "user"|"model", text: string }
+ * @param {object} options - Same as askGemini options
+ * @returns {Promise<string>} - AI response text
+ */
+export async function askGeminiWithMemory(prompt, systemPrompt = "", history = [], options = {}) {
+    const { maxRetries = 3, onRetry = null } = options;
+
+    if (!navigator.onLine) {
+        throw new Error(GEMINI_ERRORS.OFFLINE);
+    }
+
+    // Build multi-turn contents from history (5-message sliding window)
+    const recentHistory = history.slice(-5);
+    const contents = [
+        ...recentHistory.map(msg => ({
+            role: msg.role,
+            parts: [{ text: msg.text }],
+        })),
+        { role: "user", parts: [{ text: prompt }] },
+    ];
+
+    let lastError;
+
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+        try {
+            const client = getGeminiClient();
+            const model = client.getGenerativeModel({ model: "gemini-1.5-pro" });
+
+            const result = await model.generateContent({
+                contents,
+                systemInstruction: systemPrompt,
+                generationConfig: { temperature: 0.3, maxOutputTokens: 1024 },
+            });
+            return result.response.text();
+        } catch (error) {
+            lastError = error;
+            const hindiMsg = getHindiError(error);
+            if (error.code === "NO_API_KEY" || hindiMsg === GEMINI_ERRORS.NO_API_KEY) {
+                throw new Error(hindiMsg);
+            }
+            if (attempt < maxRetries) {
+                const backoffMs = Math.pow(2, attempt) * 1000;
+                if (onRetry) onRetry(attempt, maxRetries);
+                await sleep(backoffMs);
+            }
+        }
+    }
+    throw new Error(getHindiError(lastError));
+}
+
 // ============================================
 // Section 7: Gemini Prompts — VERBATIM
 // ============================================
