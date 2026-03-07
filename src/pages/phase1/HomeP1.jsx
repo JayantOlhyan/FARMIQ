@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Search, Mic, ChevronDown, Clock, FlaskConical, Bug, BarChart3 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import FarmIQLogo from "../../components/common/FarmIQLogo";
 
 const quickActions = [
     { icon: Clock, label: "बुवाई", color: "#FF9933", bg: "#FFF3E0" },
@@ -29,20 +30,15 @@ export default function HomeScreen() {
             {/* Green Header */}
             <div className="green-header rounded-b-[24px]">
                 <div className="flex items-center justify-between mb-3">
-                    <div>
-                        <h1 className="text-[22px] font-bold text-white" style={{ fontFamily: "var(--font-hindi)" }}>
-                            नमस्ते, किसान भाई! 🙏
-                        </h1>
-                        <div className="flex items-center gap-1 mt-1">
-                            <span className="text-[13px] text-white/80" style={{ fontFamily: "var(--font-hindi)" }}>
-                                {dateStr}
-                            </span>
-                            <ChevronDown size={14} className="text-white/60" />
-                        </div>
-                    </div>
+                    <FarmIQLogo variant="green" size="md" />
                     <div className="w-[44px] h-[44px] rounded-full overflow-hidden border-2 border-white/30">
                         <img src="/images/farmer.png" alt="farmer" className="w-full h-full object-cover" />
                     </div>
+                </div>
+                <div className="flex items-center gap-1 mb-2">
+                    <span className="text-[13px] text-white/80" style={{ fontFamily: "var(--font-hindi)" }}>
+                        🙏 नमस्ते, किसान भाई! • {dateStr}
+                    </span>
                 </div>
 
                 {/* Search Bar */}

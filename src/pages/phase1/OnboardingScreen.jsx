@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import useStore from "../../store/useStore";
+import FarmIQLogo from "../../components/common/FarmIQLogo";
 
 const crops = [
     { id: "wheat", name: "गेहूँ", emoji: "🌾" },
@@ -33,11 +34,11 @@ export default function OnboardingScreen() {
         <div className="app-container min-h-screen flex flex-col bg-[#1B5E3B]">
             {step === 0 && (
                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex-1 flex flex-col items-center justify-center px-8 text-center">
-                    <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", damping: 12 }} className="text-[80px] mb-6">
-                        👨‍🌾
+                    <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", damping: 12 }} className="mb-6">
+                        <FarmIQLogo variant="green" size="xl" />
                     </motion.div>
                     <h1 className="text-[26px] font-bold text-white mb-3" style={{ fontFamily: "var(--font-hindi)" }}>
-                        नमस्ते! मैं FarmIQ हूँ 🙏
+                        नमस्ते! 🙏
                     </h1>
                     <p className="text-[16px] text-white/80 mb-8" style={{ fontFamily: "var(--font-hindi)" }}>
                         आपकी खेती का AI साथी
