@@ -1,0 +1,89 @@
+@import "tailwindcss";
+
+/* ============================================
+   FarmIQ Design System — Indian Farmer UI
+   Section 3 of WRD
+   ============================================ */
+
+@theme {
+  /* Indian Flag + Farm Color Palette */
+  --color-saffron: #FF6200;
+  --color-green: #046A38;
+  --color-gold: #D4A017;
+  --color-navy: #000080;
+  --color-cream: #FFF8F0;
+  --color-bg-white: #FFFFFF;
+  --color-bg-gray: #F5F5F5;
+  --color-text-dark: #1A1A2E;
+  --color-text-mid: #666666;
+  --color-text-light: #999999;
+  --color-error: #C0392B;
+  --color-flag-saffron: #FF9933;
+  --color-flag-green: #138808;
+
+  --font-hindi: 'Noto Sans Devanagari', sans-serif;
+  --font-english: 'Inter', sans-serif;
+}
+
+/* Base reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-hindi);
+  background-color: var(--color-cream);
+  color: var(--color-text-dark);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  overflow-x: hidden;
+}
+
+/* Phase 2 overrides */
+body.phase2 {
+  font-family: var(--font-english);
+  background-color: #FAFBFC;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-text-light);
+  border-radius: 3px;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Hide elements for screen readers only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}

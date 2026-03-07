@@ -1,0 +1,1109 @@
+[
+    {
+        "id": "gehun",
+        "nameHindi": "गेहूँ",
+        "nameEnglish": "Wheat",
+        "scientificName": "Triticum aestivum",
+        "emoji": "🌾",
+        "category": "rabi",
+        "soilTypes": [
+            "loamy",
+            "clay-loam",
+            "black"
+        ],
+        "soilTypesHindi": [
+            "दोमट",
+            "चिकनी दोमट",
+            "काली"
+        ],
+        "phRange": {
+            "min": 6.0,
+            "max": 7.5
+        },
+        "sowingMonths": [
+            10,
+            11
+        ],
+        "harvestMonths": [
+            3,
+            4
+        ],
+        "waterRequirement": "moderate",
+        "stages": [
+            {
+                "name": "germination",
+                "nameHindi": "अंकुरण",
+                "daysAfterSowing": "0-7",
+                "care": "हल्की सिंचाई करें, मिट्टी नम रखें"
+            },
+            {
+                "name": "tillering",
+                "nameHindi": "कल्ले निकलना",
+                "daysAfterSowing": "15-40",
+                "care": "पहली सिंचाई 21 दिन पर करें, यूरिया डालें"
+            },
+            {
+                "name": "jointing",
+                "nameHindi": "गाँठ बनना",
+                "daysAfterSowing": "40-60",
+                "care": "दूसरी सिंचाई करें, खरपतवार निकालें"
+            },
+            {
+                "name": "heading",
+                "nameHindi": "बाली निकलना",
+                "daysAfterSowing": "60-80",
+                "care": "तीसरी सिंचाई जरूरी, कीड़ों की निगरानी करें"
+            },
+            {
+                "name": "ripening",
+                "nameHindi": "पकना",
+                "daysAfterSowing": "100-120",
+                "care": "सिंचाई बंद करें, कटाई की तैयारी करें"
+            }
+        ],
+        "fertilizer": {
+            "basal": {
+                "urea": 40,
+                "dap": 50,
+                "mop": 25
+            },
+            "topDressing": [
+                {
+                    "daysAfterSowing": 21,
+                    "urea": 30,
+                    "noteHindi": "पहली सिंचाई के बाद यूरिया डालें"
+                },
+                {
+                    "daysAfterSowing": 45,
+                    "urea": 20,
+                    "noteHindi": "दूसरी सिंचाई के बाद यूरिया डालें"
+                }
+            ]
+        },
+        "commonPests": [
+            {
+                "id": "aphids",
+                "nameHindi": "माहू / चेपा",
+                "nameEnglish": "Aphids",
+                "symptom": "पत्तियों पर चिपचिपा पदार्थ, पत्तियाँ मुड़ जाती हैं",
+                "treatment": "इमिडाक्लोप्रिड 17.8% SL — 0.5 ml/लीटर पानी में मिलाकर छिड़कें"
+            },
+            {
+                "id": "rust",
+                "nameHindi": "गेरुई / रतुआ",
+                "nameEnglish": "Rust",
+                "symptom": "पत्तियों पर भूरे-नारंगी धब्बे",
+                "treatment": "प्रोपिकोनाज़ोल 25% EC — 1 ml/लीटर पानी में छिड़कें"
+            },
+            {
+                "id": "powdery_mildew",
+                "nameHindi": "चूर्णी फफूँद",
+                "nameEnglish": "Powdery Mildew",
+                "symptom": "पत्तियों पर सफ़ेद पाउडर जैसा दिखता है",
+                "treatment": "सल्फर 80% WP — 3 ग्राम/लीटर पानी में छिड़कें"
+            }
+        ],
+        "irrigationSchedule": [
+            "21 DAS",
+            "40 DAS",
+            "60 DAS",
+            "80 DAS",
+            "100 DAS"
+        ],
+        "irrigationHindi": [
+            "बुवाई के 21 दिन बाद",
+            "40 दिन बाद",
+            "60 दिन बाद",
+            "80 दिन बाद",
+            "100 दिन बाद"
+        ],
+        "yieldPotential": {
+            "normal": "18-22",
+            "good": "25-30",
+            "unit": "क्विंटल/एकड़"
+        },
+        "msp": 2275
+    },
+    {
+        "id": "dhan",
+        "nameHindi": "धान",
+        "nameEnglish": "Rice",
+        "scientificName": "Oryza sativa",
+        "emoji": "🌾",
+        "category": "kharif",
+        "soilTypes": [
+            "clay",
+            "clay-loam",
+            "alluvial"
+        ],
+        "soilTypesHindi": [
+            "चिकनी",
+            "चिकनी दोमट",
+            "जलोढ़"
+        ],
+        "phRange": {
+            "min": 5.5,
+            "max": 7.0
+        },
+        "sowingMonths": [
+            6,
+            7
+        ],
+        "harvestMonths": [
+            10,
+            11
+        ],
+        "waterRequirement": "high",
+        "stages": [
+            {
+                "name": "nursery",
+                "nameHindi": "नर्सरी",
+                "daysAfterSowing": "0-25",
+                "care": "नर्सरी में पानी भरा रखें"
+            },
+            {
+                "name": "transplanting",
+                "nameHindi": "रोपाई",
+                "daysAfterSowing": "25-30",
+                "care": "20-25 दिन की पौध रोपें"
+            },
+            {
+                "name": "tillering",
+                "nameHindi": "कल्ले निकलना",
+                "daysAfterSowing": "30-60",
+                "care": "यूरिया की पहली खुराक दें"
+            },
+            {
+                "name": "flowering",
+                "nameHindi": "फूल आना",
+                "daysAfterSowing": "60-90",
+                "care": "पानी की कमी न होने दें"
+            },
+            {
+                "name": "ripening",
+                "nameHindi": "पकना",
+                "daysAfterSowing": "90-120",
+                "care": "कटाई की तैयारी करें"
+            }
+        ],
+        "fertilizer": {
+            "basal": {
+                "urea": 30,
+                "dap": 50,
+                "mop": 30
+            },
+            "topDressing": [
+                {
+                    "daysAfterSowing": 30,
+                    "urea": 30,
+                    "noteHindi": "रोपाई के 30 दिन बाद"
+                },
+                {
+                    "daysAfterSowing": 60,
+                    "urea": 20,
+                    "noteHindi": "बाली निकलने से पहले"
+                }
+            ]
+        },
+        "commonPests": [
+            {
+                "id": "stem_borer",
+                "nameHindi": "तना छेदक",
+                "nameEnglish": "Stem Borer",
+                "symptom": "तने में छेद, डेड हार्ट",
+                "treatment": "कार्बोफ्यूरान 3G — 20 kg/हेक्टेयर"
+            },
+            {
+                "id": "bph",
+                "nameHindi": "भूरा फुदका",
+                "nameEnglish": "Brown Plant Hopper",
+                "symptom": "पौधे सूखने लगते हैं, 'हॉपर बर्न'",
+                "treatment": "इमिडाक्लोप्रिड — 0.5 ml/लीटर"
+            },
+            {
+                "id": "blast",
+                "nameHindi": "ब्लास्ट रोग",
+                "nameEnglish": "Rice Blast",
+                "symptom": "पत्तियों पर आँख जैसे धब्बे",
+                "treatment": "ट्राइसाइक्लाज़ोल — 0.6 ग्राम/लीटर"
+            }
+        ],
+        "irrigationSchedule": [
+            "रोपाई से कटाई तक खड़ा पानी"
+        ],
+        "irrigationHindi": [
+            "हमेशा 5-7 cm पानी खड़ा रखें, फूल आने पर ज़रूरी"
+        ],
+        "yieldPotential": {
+            "normal": "20-25",
+            "good": "30-40",
+            "unit": "क्विंटल/एकड़"
+        },
+        "msp": 2300
+    },
+    {
+        "id": "kapas",
+        "nameHindi": "कपास",
+        "nameEnglish": "Cotton",
+        "scientificName": "Gossypium hirsutum",
+        "emoji": "☁️",
+        "category": "kharif",
+        "soilTypes": [
+            "black",
+            "alluvial",
+            "loamy"
+        ],
+        "soilTypesHindi": [
+            "काली",
+            "जलोढ़",
+            "दोमट"
+        ],
+        "phRange": {
+            "min": 6.0,
+            "max": 8.0
+        },
+        "sowingMonths": [
+            4,
+            5
+        ],
+        "harvestMonths": [
+            10,
+            11,
+            12
+        ],
+        "waterRequirement": "moderate",
+        "stages": [
+            {
+                "name": "germination",
+                "nameHindi": "अंकुरण",
+                "daysAfterSowing": "0-10",
+                "care": "मिट्टी नम रखें"
+            },
+            {
+                "name": "vegetative",
+                "nameHindi": "बढ़वार",
+                "daysAfterSowing": "10-50",
+                "care": "निराई-गुड़ाई करें"
+            },
+            {
+                "name": "flowering",
+                "nameHindi": "फूल आना",
+                "daysAfterSowing": "50-80",
+                "care": "कीड़ों की निगरानी करें"
+            },
+            {
+                "name": "boll_formation",
+                "nameHindi": "टिंडे बनना",
+                "daysAfterSowing": "80-120",
+                "care": "सिंचाई जारी रखें"
+            },
+            {
+                "name": "picking",
+                "nameHindi": "चुनाई",
+                "daysAfterSowing": "140-180",
+                "care": "पके टिंडे चुनें"
+            }
+        ],
+        "fertilizer": {
+            "basal": {
+                "urea": 25,
+                "dap": 50,
+                "mop": 30
+            },
+            "topDressing": [
+                {
+                    "daysAfterSowing": 30,
+                    "urea": 25,
+                    "noteHindi": "पहली निराई के बाद"
+                },
+                {
+                    "daysAfterSowing": 60,
+                    "urea": 25,
+                    "noteHindi": "फूल आने से पहले"
+                }
+            ]
+        },
+        "commonPests": [
+            {
+                "id": "bollworm",
+                "nameHindi": "सुंडी",
+                "nameEnglish": "Bollworm",
+                "symptom": "टिंडों में छेद",
+                "treatment": "Bt कपास लगाएँ या स्पिनोसैड छिड़कें"
+            },
+            {
+                "id": "whitefly",
+                "nameHindi": "सफ़ेद मक्खी",
+                "nameEnglish": "Whitefly",
+                "symptom": "पत्तियाँ चिपचिपी, काली फफूँद",
+                "treatment": "नीम तेल 5 ml/लीटर छिड़कें"
+            }
+        ],
+        "irrigationSchedule": [
+            "20 DAS",
+            "40 DAS",
+            "60 DAS",
+            "80 DAS",
+            "100 DAS"
+        ],
+        "irrigationHindi": [
+            "हर 20 दिन में सिंचाई, फूल-टिंडे में ज़रूरी"
+        ],
+        "yieldPotential": {
+            "normal": "6-8",
+            "good": "10-12",
+            "unit": "क्विंटल/एकड़"
+        },
+        "msp": 7121
+    },
+    {
+        "id": "ganna",
+        "nameHindi": "गन्ना",
+        "nameEnglish": "Sugarcane",
+        "scientificName": "Saccharum officinarum",
+        "emoji": "🎋",
+        "category": "kharif",
+        "soilTypes": [
+            "loamy",
+            "clay-loam",
+            "alluvial"
+        ],
+        "soilTypesHindi": [
+            "दोमट",
+            "चिकनी दोमट",
+            "जलोढ़"
+        ],
+        "phRange": {
+            "min": 6.0,
+            "max": 7.5
+        },
+        "sowingMonths": [
+            2,
+            3
+        ],
+        "harvestMonths": [
+            11,
+            12,
+            1,
+            2
+        ],
+        "waterRequirement": "high",
+        "stages": [
+            {
+                "name": "germination",
+                "nameHindi": "अंकुरण",
+                "daysAfterSowing": "0-30",
+                "care": "हल्की सिंचाई"
+            },
+            {
+                "name": "tillering",
+                "nameHindi": "कल्ले निकलना",
+                "daysAfterSowing": "30-90",
+                "care": "यूरिया दें, मिट्टी चढ़ाएँ"
+            },
+            {
+                "name": "grand_growth",
+                "nameHindi": "तेज़ बढ़वार",
+                "daysAfterSowing": "90-240",
+                "care": "भरपूर सिंचाई, खरपतवार हटाएँ"
+            },
+            {
+                "name": "ripening",
+                "nameHindi": "पकना",
+                "daysAfterSowing": "270-360",
+                "care": "सिंचाई बंद करें"
+            }
+        ],
+        "fertilizer": {
+            "basal": {
+                "urea": 0,
+                "dap": 75,
+                "mop": 40
+            },
+            "topDressing": [
+                {
+                    "daysAfterSowing": 30,
+                    "urea": 50,
+                    "noteHindi": "पहली सिंचाई के साथ"
+                },
+                {
+                    "daysAfterSowing": 60,
+                    "urea": 50,
+                    "noteHindi": "दूसरी बार यूरिया"
+                },
+                {
+                    "daysAfterSowing": 90,
+                    "urea": 50,
+                    "noteHindi": "मिट्टी चढ़ाते समय"
+                }
+            ]
+        },
+        "commonPests": [
+            {
+                "id": "top_borer",
+                "nameHindi": "शीर्ष छेदक",
+                "nameEnglish": "Top Borer",
+                "symptom": "ऊपरी पत्तियों में छेद",
+                "treatment": "ट्राइकोकार्ड लगाएँ"
+            },
+            {
+                "id": "red_rot",
+                "nameHindi": "लाल सड़न",
+                "nameEnglish": "Red Rot",
+                "symptom": "तने के अंदर लाल रंग",
+                "treatment": "प्रतिरोधी किस्म लगाएँ"
+            }
+        ],
+        "irrigationSchedule": [
+            "हर 15-20 दिन"
+        ],
+        "irrigationHindi": [
+            "गर्मी में 10-15 दिन, बारिश में जरूरत अनुसार"
+        ],
+        "yieldPotential": {
+            "normal": "300-400",
+            "good": "500-600",
+            "unit": "क्विंटल/एकड़"
+        },
+        "msp": 315
+    },
+    {
+        "id": "tamatar",
+        "nameHindi": "टमाटर",
+        "nameEnglish": "Tomato",
+        "scientificName": "Solanum lycopersicum",
+        "emoji": "🍅",
+        "category": "vegetables",
+        "soilTypes": [
+            "loamy",
+            "sandy-loam"
+        ],
+        "soilTypesHindi": [
+            "दोमट",
+            "रेतीली दोमट"
+        ],
+        "phRange": {
+            "min": 6.0,
+            "max": 7.0
+        },
+        "sowingMonths": [
+            7,
+            8,
+            1,
+            2
+        ],
+        "harvestMonths": [
+            10,
+            11,
+            4,
+            5
+        ],
+        "waterRequirement": "moderate",
+        "stages": [
+            {
+                "name": "nursery",
+                "nameHindi": "नर्सरी",
+                "daysAfterSowing": "0-25",
+                "care": "छायादार जगह, नम रखें"
+            },
+            {
+                "name": "transplanting",
+                "nameHindi": "रोपाई",
+                "daysAfterSowing": "25-30",
+                "care": "शाम को रोपें, तुरंत पानी दें"
+            },
+            {
+                "name": "vegetative",
+                "nameHindi": "बढ़वार",
+                "daysAfterSowing": "30-50",
+                "care": "सहारा दें, निराई करें"
+            },
+            {
+                "name": "flowering",
+                "nameHindi": "फूल आना",
+                "daysAfterSowing": "50-70",
+                "care": "बोरॉन स्प्रे करें"
+            },
+            {
+                "name": "fruiting",
+                "nameHindi": "फल लगना",
+                "daysAfterSowing": "70-120",
+                "care": "नियमित तुड़ाई करें"
+            }
+        ],
+        "fertilizer": {
+            "basal": {
+                "urea": 0,
+                "dap": 50,
+                "mop": 40
+            },
+            "topDressing": [
+                {
+                    "daysAfterSowing": 21,
+                    "urea": 25,
+                    "noteHindi": "रोपाई के 3 हफ्ते बाद"
+                },
+                {
+                    "daysAfterSowing": 45,
+                    "urea": 25,
+                    "noteHindi": "फूल आने पर"
+                }
+            ]
+        },
+        "commonPests": [
+            {
+                "id": "fruit_borer",
+                "nameHindi": "फल छेदक",
+                "nameEnglish": "Fruit Borer",
+                "symptom": "फलों में छेद",
+                "treatment": "नीम तेल + स्पिनोसैड"
+            },
+            {
+                "id": "leaf_curl",
+                "nameHindi": "पत्ती मोड़क",
+                "nameEnglish": "Leaf Curl Virus",
+                "symptom": "पत्तियाँ मुड़ जाती हैं",
+                "treatment": "सफ़ेद मक्खी का नियंत्रण करें"
+            }
+        ],
+        "irrigationSchedule": [
+            "हर 5-7 दिन"
+        ],
+        "irrigationHindi": [
+            "ड्रिप सिंचाई सबसे अच्छी, गर्मी में रोज़ पानी"
+        ],
+        "yieldPotential": {
+            "normal": "100-150",
+            "good": "200-300",
+            "unit": "क्विंटल/एकड़"
+        },
+        "msp": 0
+    },
+    {
+        "id": "aalu",
+        "nameHindi": "आलू",
+        "nameEnglish": "Potato",
+        "scientificName": "Solanum tuberosum",
+        "emoji": "🥔",
+        "category": "rabi",
+        "soilTypes": [
+            "sandy-loam",
+            "loamy"
+        ],
+        "soilTypesHindi": [
+            "रेतीली दोमट",
+            "दोमट"
+        ],
+        "phRange": {
+            "min": 5.5,
+            "max": 6.5
+        },
+        "sowingMonths": [
+            10,
+            11
+        ],
+        "harvestMonths": [
+            1,
+            2,
+            3
+        ],
+        "waterRequirement": "moderate",
+        "stages": [
+            {
+                "name": "planting",
+                "nameHindi": "बुवाई",
+                "daysAfterSowing": "0-10",
+                "care": "कटे बीज उपचारित करके बोएँ"
+            },
+            {
+                "name": "vegetative",
+                "nameHindi": "बढ़वार",
+                "daysAfterSowing": "10-40",
+                "care": "मिट्टी चढ़ाएँ, निराई करें"
+            },
+            {
+                "name": "tuber_init",
+                "nameHindi": "कंद बनना",
+                "daysAfterSowing": "40-60",
+                "care": "सिंचाई नियमित रखें"
+            },
+            {
+                "name": "tuber_bulking",
+                "nameHindi": "कंद भरना",
+                "daysAfterSowing": "60-90",
+                "care": "झुलसा रोग की निगरानी"
+            },
+            {
+                "name": "maturation",
+                "nameHindi": "पकना",
+                "daysAfterSowing": "90-120",
+                "care": "10 दिन पहले पानी बंद करें"
+            }
+        ],
+        "fertilizer": {
+            "basal": {
+                "urea": 35,
+                "dap": 75,
+                "mop": 50
+            },
+            "topDressing": [
+                {
+                    "daysAfterSowing": 30,
+                    "urea": 35,
+                    "noteHindi": "मिट्टी चढ़ाते समय"
+                }
+            ]
+        },
+        "commonPests": [
+            {
+                "id": "late_blight",
+                "nameHindi": "पछेती झुलसा",
+                "nameEnglish": "Late Blight",
+                "symptom": "पत्तियों पर भूरे पानी वाले धब्बे",
+                "treatment": "मैंकोज़ेब 2.5 ग्राम/लीटर छिड़कें"
+            },
+            {
+                "id": "tuber_moth",
+                "nameHindi": "कंद कीट",
+                "nameEnglish": "Potato Tuber Moth",
+                "symptom": "कंद में सुरंग",
+                "treatment": "मिट्टी अच्छी से चढ़ाएँ"
+            }
+        ],
+        "irrigationSchedule": [
+            "10 DAS",
+            "25 DAS",
+            "40 DAS",
+            "55 DAS",
+            "70 DAS"
+        ],
+        "irrigationHindi": [
+            "हर 10-15 दिन में सिंचाई, ज़्यादा पानी न दें"
+        ],
+        "yieldPotential": {
+            "normal": "80-100",
+            "good": "120-150",
+            "unit": "क्विंटल/एकड़"
+        },
+        "msp": 0
+    },
+    {
+        "id": "haldi",
+        "nameHindi": "हल्दी",
+        "nameEnglish": "Turmeric",
+        "scientificName": "Curcuma longa",
+        "emoji": "🟡",
+        "category": "kharif",
+        "soilTypes": [
+            "loamy",
+            "clay-loam"
+        ],
+        "soilTypesHindi": [
+            "दोमट",
+            "चिकनी दोमट"
+        ],
+        "phRange": {
+            "min": 5.5,
+            "max": 7.5
+        },
+        "sowingMonths": [
+            5,
+            6
+        ],
+        "harvestMonths": [
+            1,
+            2,
+            3
+        ],
+        "waterRequirement": "moderate",
+        "stages": [
+            {
+                "name": "planting",
+                "nameHindi": "बुवाई",
+                "daysAfterSowing": "0-30",
+                "care": "माँ कंद से बोएँ, गीली रखें"
+            },
+            {
+                "name": "vegetative",
+                "nameHindi": "बढ़वार",
+                "daysAfterSowing": "30-120",
+                "care": "निराई, मल्चिंग करें"
+            },
+            {
+                "name": "rhizome",
+                "nameHindi": "कंद बढ़ना",
+                "daysAfterSowing": "120-210",
+                "care": "मिट्टी चढ़ाएँ"
+            },
+            {
+                "name": "maturation",
+                "nameHindi": "पकना",
+                "daysAfterSowing": "240-270",
+                "care": "पत्तियाँ सूखने पर खोदें"
+            }
+        ],
+        "fertilizer": {
+            "basal": {
+                "urea": 0,
+                "dap": 40,
+                "mop": 40
+            },
+            "topDressing": [
+                {
+                    "daysAfterSowing": 45,
+                    "urea": 30,
+                    "noteHindi": "पहली निराई के बाद"
+                },
+                {
+                    "daysAfterSowing": 90,
+                    "urea": 30,
+                    "noteHindi": "मिट्टी चढ़ाते समय"
+                }
+            ]
+        },
+        "commonPests": [
+            {
+                "id": "shoot_borer",
+                "nameHindi": "तना छेदक",
+                "nameEnglish": "Shoot Borer",
+                "symptom": "फसल सूखने लगती है",
+                "treatment": "मैलाथियॉन 50 EC छिड़कें"
+            },
+            {
+                "id": "leaf_spot",
+                "nameHindi": "पत्ती धब्बा",
+                "nameEnglish": "Leaf Spot",
+                "symptom": "पत्तियों पर भूरे धब्बे",
+                "treatment": "मैंकोज़ेब 2.5 ग्राम/लीटर"
+            }
+        ],
+        "irrigationSchedule": [
+            "हर 7-10 दिन"
+        ],
+        "irrigationHindi": [
+            "बारिश में पानी न भरने दें, सर्दी में 15 दिन पर"
+        ],
+        "yieldPotential": {
+            "normal": "80-100",
+            "good": "120-150",
+            "unit": "क्विंटल/एकड़ (कच्ची)"
+        },
+        "msp": 0
+    },
+    {
+        "id": "mirch",
+        "nameHindi": "मिर्च",
+        "nameEnglish": "Chilli",
+        "scientificName": "Capsicum annuum",
+        "emoji": "🌶️",
+        "category": "kharif",
+        "soilTypes": [
+            "loamy",
+            "sandy-loam",
+            "black"
+        ],
+        "soilTypesHindi": [
+            "दोमट",
+            "रेतीली दोमट",
+            "काली"
+        ],
+        "phRange": {
+            "min": 6.0,
+            "max": 7.0
+        },
+        "sowingMonths": [
+            6,
+            7
+        ],
+        "harvestMonths": [
+            10,
+            11,
+            12
+        ],
+        "waterRequirement": "moderate",
+        "stages": [
+            {
+                "name": "nursery",
+                "nameHindi": "नर्सरी",
+                "daysAfterSowing": "0-30",
+                "care": "छाया में, नम रखें"
+            },
+            {
+                "name": "transplanting",
+                "nameHindi": "रोपाई",
+                "daysAfterSowing": "30-35",
+                "care": "शाम को रोपें"
+            },
+            {
+                "name": "vegetative",
+                "nameHindi": "बढ़वार",
+                "daysAfterSowing": "35-60",
+                "care": "निराई, खाद दें"
+            },
+            {
+                "name": "flowering",
+                "nameHindi": "फूल आना",
+                "daysAfterSowing": "60-80",
+                "care": "पानी की कमी न हो"
+            },
+            {
+                "name": "fruiting",
+                "nameHindi": "फल लगना",
+                "daysAfterSowing": "80-150",
+                "care": "नियमित तुड़ाई"
+            }
+        ],
+        "fertilizer": {
+            "basal": {
+                "urea": 0,
+                "dap": 50,
+                "mop": 30
+            },
+            "topDressing": [
+                {
+                    "daysAfterSowing": 30,
+                    "urea": 25,
+                    "noteHindi": "रोपाई के एक महीने बाद"
+                },
+                {
+                    "daysAfterSowing": 60,
+                    "urea": 25,
+                    "noteHindi": "फूल आने पर"
+                }
+            ]
+        },
+        "commonPests": [
+            {
+                "id": "thrips",
+                "nameHindi": "थ्रिप्स",
+                "nameEnglish": "Thrips",
+                "symptom": "पत्तियाँ ऊपर मुड़ जाती हैं",
+                "treatment": "फिप्रोनिल 5 SC — 1.5 ml/लीटर"
+            },
+            {
+                "id": "fruit_rot",
+                "nameHindi": "फल सड़न",
+                "nameEnglish": "Fruit Rot",
+                "symptom": "मिर्च पर काले धब्बे",
+                "treatment": "मैंकोज़ेब छिड़कें"
+            }
+        ],
+        "irrigationSchedule": [
+            "हर 5-7 दिन"
+        ],
+        "irrigationHindi": [
+            "ड्रिप सिंचाई सबसे अच्छी"
+        ],
+        "yieldPotential": {
+            "normal": "40-60",
+            "good": "80-100",
+            "unit": "क्विंटल/एकड़ (हरी)"
+        },
+        "msp": 0
+    },
+    {
+        "id": "sarson",
+        "nameHindi": "सरसों",
+        "nameEnglish": "Mustard",
+        "scientificName": "Brassica juncea",
+        "emoji": "💛",
+        "category": "rabi",
+        "soilTypes": [
+            "loamy",
+            "sandy-loam"
+        ],
+        "soilTypesHindi": [
+            "दोमट",
+            "रेतीली दोमट"
+        ],
+        "phRange": {
+            "min": 6.0,
+            "max": 7.5
+        },
+        "sowingMonths": [
+            10,
+            11
+        ],
+        "harvestMonths": [
+            2,
+            3
+        ],
+        "waterRequirement": "low",
+        "stages": [
+            {
+                "name": "germination",
+                "nameHindi": "अंकुरण",
+                "daysAfterSowing": "0-7",
+                "care": "मिट्टी नम रखें"
+            },
+            {
+                "name": "vegetative",
+                "nameHindi": "बढ़वार",
+                "daysAfterSowing": "7-40",
+                "care": "पहली सिंचाई 25-30 दिन पर"
+            },
+            {
+                "name": "flowering",
+                "nameHindi": "फूल आना",
+                "daysAfterSowing": "40-70",
+                "care": "सिंचाई ज़रूरी, माहू की निगरानी"
+            },
+            {
+                "name": "pod_formation",
+                "nameHindi": "फली बनना",
+                "daysAfterSowing": "70-100",
+                "care": "कीड़ों पर नज़र रखें"
+            },
+            {
+                "name": "ripening",
+                "nameHindi": "पकना",
+                "daysAfterSowing": "100-130",
+                "care": "फलियाँ भूरी होने पर काटें"
+            }
+        ],
+        "fertilizer": {
+            "basal": {
+                "urea": 25,
+                "dap": 40,
+                "mop": 15
+            },
+            "topDressing": [
+                {
+                    "daysAfterSowing": 25,
+                    "urea": 25,
+                    "noteHindi": "पहली सिंचाई के साथ"
+                }
+            ]
+        },
+        "commonPests": [
+            {
+                "id": "aphids",
+                "nameHindi": "माहू",
+                "nameEnglish": "Mustard Aphid",
+                "symptom": "फूलों और फलियों पर काले कीड़े",
+                "treatment": "डाइमिथोएट 30 EC — 1 ml/लीटर"
+            },
+            {
+                "id": "painted_bug",
+                "nameHindi": "चित्रित बग",
+                "nameEnglish": "Painted Bug",
+                "symptom": "पत्तियाँ सूख जाती हैं",
+                "treatment": "मैलाथियॉन 50 EC छिड़कें"
+            }
+        ],
+        "irrigationSchedule": [
+            "25 DAS",
+            "50 DAS"
+        ],
+        "irrigationHindi": [
+            "बस 2-3 सिंचाई काफी, फूल आने पर ज़रूरी"
+        ],
+        "yieldPotential": {
+            "normal": "5-7",
+            "good": "8-10",
+            "unit": "क्विंटल/एकड़"
+        },
+        "msp": 5650
+    },
+    {
+        "id": "moong",
+        "nameHindi": "मूँग",
+        "nameEnglish": "Moong (Green Gram)",
+        "scientificName": "Vigna radiata",
+        "emoji": "🫘",
+        "category": "kharif",
+        "soilTypes": [
+            "loamy",
+            "sandy-loam"
+        ],
+        "soilTypesHindi": [
+            "दोमट",
+            "रेतीली दोमट"
+        ],
+        "phRange": {
+            "min": 6.5,
+            "max": 7.5
+        },
+        "sowingMonths": [
+            3,
+            4,
+            7
+        ],
+        "harvestMonths": [
+            5,
+            6,
+            9,
+            10
+        ],
+        "waterRequirement": "low",
+        "stages": [
+            {
+                "name": "germination",
+                "nameHindi": "अंकुरण",
+                "daysAfterSowing": "0-7",
+                "care": "नमी बनाए रखें"
+            },
+            {
+                "name": "vegetative",
+                "nameHindi": "बढ़वार",
+                "daysAfterSowing": "7-30",
+                "care": "निराई करें"
+            },
+            {
+                "name": "flowering",
+                "nameHindi": "फूल आना",
+                "daysAfterSowing": "30-45",
+                "care": "सिंचाई दें"
+            },
+            {
+                "name": "pod_filling",
+                "nameHindi": "फली भरना",
+                "daysAfterSowing": "45-60",
+                "care": "कीड़ों की निगरानी"
+            },
+            {
+                "name": "maturity",
+                "nameHindi": "पकना",
+                "daysAfterSowing": "60-75",
+                "care": "काली फलियाँ तोड़ें"
+            }
+        ],
+        "fertilizer": {
+            "basal": {
+                "urea": 10,
+                "dap": 40,
+                "mop": 20
+            },
+            "topDressing": []
+        },
+        "commonPests": [
+            {
+                "id": "pod_borer",
+                "nameHindi": "फली छेदक",
+                "nameEnglish": "Pod Borer",
+                "symptom": "फलियों में छेद",
+                "treatment": "क्विनालफॉस 25 EC — 2 ml/लीटर"
+            },
+            {
+                "id": "yellow_mosaic",
+                "nameHindi": "पीला मोज़ेक",
+                "nameEnglish": "Yellow Mosaic Virus",
+                "symptom": "पत्तियाँ पीली हो जाती हैं",
+                "treatment": "सफ़ेद मक्खी की रोकथाम करें"
+            }
+        ],
+        "irrigationSchedule": [
+            "20 DAS",
+            "40 DAS"
+        ],
+        "irrigationHindi": [
+            "बहुत कम पानी चाहिए, बारिश पर निर्भर"
+        ],
+        "yieldPotential": {
+            "normal": "3-5",
+            "good": "6-8",
+            "unit": "क्विंटल/एकड़"
+        },
+        "msp": 8558
+    }
+]
