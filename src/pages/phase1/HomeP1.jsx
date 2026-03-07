@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Search, Mic, ChevronDown, Clock, FlaskConical, Bug, BarChart3 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import FarmIQLogo from "../../components/common/FarmIQLogo";
+import { formatIndianDate, formatShortDate } from "../../lib/dateFormat";
 
 const quickActions = [
     { icon: Clock, label: "बुवाई", color: "#FF9933", bg: "#FFF3E0" },
@@ -23,7 +24,7 @@ const fadeUp = { hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, tra
 export default function HomeScreen() {
     const navigate = useNavigate();
     const today = new Date();
-    const dateStr = today.toLocaleDateString("hi-IN", { day: "numeric", month: "long", year: "numeric", weekday: "long" });
+    const dateStr = formatIndianDate(today);
 
     return (
         <div className="pb-[88px]">
@@ -172,7 +173,7 @@ export default function HomeScreen() {
                 >
                     <div className="flex justify-between items-start">
                         <span className="text-[13px] text-white/80" style={{ fontFamily: "var(--font-hindi)" }}>
-                            उन्नाव, उत्तर प्रदेश — {today.toLocaleDateString("hi-IN", { day: "numeric", month: "short", year: "numeric" })}
+                            उन्नाव, उत्तर प्रदेश — {formatShortDate(today)} {today.getFullYear()}
                         </span>
                         <span className="text-[18px]">☀️</span>
                     </div>

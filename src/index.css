@@ -33,6 +33,17 @@
   --radius-pill: 50px;
 }
 
+/* Sprint 3: Dark Mode Tokens (Section 1.8 of Improvement Doc) */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg-primary: #0A1628;
+    --color-bg-card: #1A2535;
+    --color-text-primary: #F5F5F5;
+    --color-text-secondary: #A0ADB8;
+    --color-border-dark: #2A3545;
+  }
+}
+
 /* Base reset */
 *,
 *::before,

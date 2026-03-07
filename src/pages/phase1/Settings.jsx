@@ -1,14 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
-import { ArrowLeft, Check } from "lucide-react";
+import { ArrowLeft, Check, User } from "lucide-react";
 import useStore from "../../store/useStore";
 
 export default function Settings() {
     const { t, i18n } = useTranslation();
     const navigate = useNavigate();
-    const { selectedLanguage, setLanguage, userMode } = useStore();
+    const { selectedLanguage, setLanguage, userMode, myCrops, farmProfile } = useStore();
     const [apiKey, setApiKey] = useState("");
     const [saved, setSaved] = useState(false);
     const isP1 = userMode === "phase1";
@@ -31,8 +31,39 @@ export default function Settings() {
         i18n.changeLanguage(lang);
     };
 
+    // Sprint 3: Profile completeness calculation
+    const profileData = useMemo(() => {
+        let score = 0;
+        const total = 5;
+        const missing = [];
+
+        if (selectedLanguage) score++;
+        else missing.push("भाषा चुनें");
+
+        if (myCrops?.length > 0) score++;
+        else missing.push("फसल जोड़ें");
+
+        if (apiKey || localStorage.getItem("farmiq_gemini_key")) score++;
+        else missing.push("API Key डालें");
+
+        if (farmProfile?.state) score++;
+        else missing.push("राज्य भरें");
+
+        if (farmProfile?.soilType) score++;
+        else missing.push("मिट्टी का प्रकार");
+
+        return { score, total, percent: Math.round((score / total) * 100), missing };
+    }, [selectedLanguage, myCrops, apiKey, farmProfile]);
+
     const languages = [
         { code: "hi", label: "हिंदी", flag: "🇮🇳" },
+        { code: "pa", label: "ਪੰਜਾਬੀ", flag: "🇮🇳" },
+        { code: "bn", label: "বাংলা", flag: "🇮🇳" },
+        { code: "ta", label: "தமிழ்", flag: "🇮🇳" },
+        { code: "te", label: "తెలుగు", flag: "🇮🇳" },
+        { code: "mr", label: "मराठी", flag: "🇮🇳" },
+        { code: "gu", label: "ગુજરાતી", flag: "🇮🇳" },
+        { code: "kn", label: "ಕನ್ನಡ", flag: "🇮🇳" },
         { code: "en", label: "English", flag: "🇬🇧" },
     ];
 
@@ -57,6 +88,40 @@ export default function Settings() {
                 >
                     ⚙️ {t("settings")}
                 </h1>
+
+                {/* Sprint 3: Profile Completeness */}
+                <div
+                    className="rounded-xl p-5 mb-6"
+                    style={{ backgroundColor: "#FFFFFF", border: "1px solid #E8E8E8" }}
+                >
+                    <div className="flex items-center gap-3 mb-3">
+                        <div className="w-[48px] h-[48px] rounded-full bg-[#E8F5E9] flex items-center justify-center">
+                            <User size={24} color="#1B5E3B" />
+                        </div>
+                        <div className="flex-1">
+                            <h2 className="text-[16px] font-bold text-[#1A1A1A]" style={{ fontFamily: "var(--font-hindi)" }}>
+                                प्रोफ़ाइल {profileData.percent}% पूरा
+                            </h2>
+                            <p className="text-[12px] text-[#666]" style={{ fontFamily: "var(--font-hindi)" }}>
+                                {profileData.missing.length > 0 ? `अगला कदम: ${profileData.missing[0]}` : "🎉 प्रोफ़ाइल पूरा है!"}
+                            </p>
+                        </div>
+                    </div>
+                    {/* Progress bar */}
+                    <div className="h-[8px] bg-[#F0F0F0] rounded-full overflow-hidden">
+                        <motion.div
+                            initial={{ width: 0 }}
+                            animate={{ width: `${profileData.percent}%` }}
+                            transition={{ duration: 0.8, ease: "easeOut" }}
+                            className="h-full rounded-full"
+                            style={{
+                                background: profileData.percent === 100
+                                    ? "linear-gradient(90deg, #2E7D32, #4CAF50)"
+                                    : "linear-gradient(90deg, #FF9933, #FF6200)",
+                            }}
+                        />
+                    </div>
+                </div>
 
                 {/* API Key Section */}
                 <div
@@ -111,28 +176,21 @@ export default function Settings() {
                     <h2 className="text-lg font-bold mb-3" style={{ fontFamily: "var(--font-hindi)", color: "#1A1A2E" }}>
                         🌐 {t("language")}
                     </h2>
-                    <div className="flex flex-col gap-2">
+                    <div className="flex flex-wrap gap-2">
                         {languages.map((lang) => (
                             <button
                                 key={lang.code}
                                 onClick={() => handleLanguageChange(lang.code)}
-                                className="flex items-center gap-3 px-4 py-3 rounded-xl border-0 cursor-pointer w-full text-left"
+                                className="px-4 py-2.5 rounded-full border-0 cursor-pointer active:scale-95 transition-all text-[14px] font-medium"
                                 style={{
                                     backgroundColor: selectedLanguage === lang.code ? "#E8F5E9" : "#F5F5F5",
-                                    border: selectedLanguage === lang.code ? "2px solid #046A38" : "none",
-                                    minHeight: "52px",
+                                    border: selectedLanguage === lang.code ? "2px solid #1B5E3B" : "2px solid transparent",
+                                    fontFamily: "var(--font-hindi)",
+                                    color: selectedLanguage === lang.code ? "#1B5E3B" : "#1A1A1A",
                                 }}
                             >
-                                <span className="text-xl">{lang.flag}</span>
-                                <span
-                                    className="text-base font-medium"
-                                    style={{ fontFamily: "var(--font-hindi)", color: "#1A1A2E" }}
-                                >
-                                    {lang.label}
-                                </span>
-                                {selectedLanguage === lang.code && (
-                                    <Check size={18} className="ml-auto" style={{ color: "#046A38" }} />
-                                )}
+                                {lang.flag} {lang.label}
+                                {selectedLanguage === lang.code && " ✓"}
                             </button>
                         ))}
                     </div>
@@ -151,7 +209,7 @@ export default function Settings() {
                         यह Google Gemini AI की शक्ति से चलता है।
                     </p>
                     <p className="text-xs mt-3" style={{ color: "#999" }}>
-                        Version 1.0 • Team: Hack Homies • Elite Hack 1.0
+                        Version 2.0 • Team: Hack Homies • Elite Hack 1.0
                     </p>
                 </div>
             </div>
