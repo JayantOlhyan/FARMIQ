@@ -53,9 +53,11 @@ body.phase2 {
   width: 6px;
   height: 6px;
 }
+
 ::-webkit-scrollbar-track {
   background: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
   background: var(--color-text-light);
   border-radius: 3px;
@@ -68,7 +70,10 @@ html {
 
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
@@ -86,4 +91,72 @@ html {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border-width: 0;
+}
+
+/* Toast notification animations */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+@keyframes fadeOutUp {
+  from {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-20px);
+  }
+}
+
+/* Green wave mode transition overlay */
+.mode-transition-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  background: radial-gradient(circle at center, #046A38 0%, transparent 70%);
+  pointer-events: none;
+  animation: greenWave 0.6s ease-out forwards;
+}
+
+@keyframes greenWave {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+
+  50% {
+    opacity: 0.4;
+    transform: scale(1.2);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(2);
+  }
+}
+
+/* PWA install prompt styling */
+.pwa-install-banner {
+  position: fixed;
+  bottom: 80px;
+  left: 16px;
+  right: 16px;
+  z-index: 100;
+  padding: 16px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #046A38 0%, #FF6200 100%);
+  color: #FFF;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  font-family: var(--font-hindi);
+  text-align: center;
 }
