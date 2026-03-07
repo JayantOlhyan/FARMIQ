@@ -1,99 +1,167 @@
 @import "tailwindcss";
 
 /* ============================================
-   FarmIQ Design System — Indian Farmer UI
-   Section 3 of WRD
+   FarmIQ Design System — Reference Image Match
+   Forest Green (#1B5E3B) based design
    ============================================ */
 
 @theme {
-  /* Indian Flag + Farm Color Palette */
-  --color-saffron: #FF6200;
-  --color-green: #046A38;
-  --color-gold: #D4A017;
-  --color-navy: #000080;
-  --color-cream: #FFF8F0;
-  --color-bg-white: #FFFFFF;
-  --color-bg-gray: #F5F5F5;
-  --color-text-dark: #1A1A2E;
-  --color-text-mid: #666666;
+  /* Primary palette from reference images */
+  --color-primary: #1B5E3B;
+  --color-primary-light: #2E7D32;
+  --color-primary-dark: #14472D;
+  --color-light-green-bg: #F0F7F2;
+  --color-card-white: #FFFFFF;
+  --color-text-dark: #1A1A1A;
+  --color-text-gray: #666666;
   --color-text-light: #999999;
-  --color-error: #C0392B;
-  --color-flag-saffron: #FF9933;
+  --color-price-up: #2E7D32;
+  --color-price-down: #C62828;
+  --color-accent-saffron: #FF9933;
   --color-flag-green: #138808;
+  --color-gold-star: #F9A825;
+  --color-border: #F0F0F0;
+  --color-bg-toggle: #F0F0F0;
 
+  /* Typography */
   --font-hindi: 'Noto Sans Devanagari', sans-serif;
   --font-english: 'Inter', sans-serif;
+
+  /* Border Radius */
+  --radius-card: 16px;
+  --radius-btn: 12px;
+  --radius-pill: 50px;
 }
 
 /* Base reset */
-* {
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: var(--font-hindi);
-  background-color: var(--color-cream);
+  background-color: var(--color-light-green-bg);
   color: var(--color-text-dark);
-  line-height: 1.7;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -webkit-tap-highlight-color: transparent;
   overflow-x: hidden;
 }
 
-/* Phase 2 overrides */
-body.phase2 {
-  font-family: var(--font-english);
-  background-color: #FAFBFC;
+/* Mobile-first container */
+.app-container {
+  max-width: 430px;
+  margin: 0 auto;
+  min-height: 100vh;
+  position: relative;
+  background-color: var(--color-light-green-bg);
+  overflow-x: hidden;
 }
 
-/* Scrollbar styling */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+/* Scrollbar hide for horizontal scroll */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
 }
 
-::-webkit-scrollbar-track {
-  background: transparent;
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
-::-webkit-scrollbar-thumb {
-  background: var(--color-text-light);
-  border-radius: 3px;
+/* Card base */
+.farmiq-card {
+  background: var(--color-card-white);
+  border-radius: var(--radius-card);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
 }
 
-/* Smooth scrolling */
-html {
-  scroll-behavior: smooth;
+/* Segmented toggle */
+.segmented-toggle {
+  background: var(--color-bg-toggle);
+  border-radius: var(--radius-pill);
+  padding: 4px;
+  display: flex;
+  position: relative;
 }
 
-/* Reduced motion */
-@media (prefers-reduced-motion: reduce) {
-
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
+.segmented-toggle .toggle-pill {
+  flex: 1;
+  text-align: center;
+  padding: 10px 16px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-hindi);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 200ms ease;
+  z-index: 1;
+  position: relative;
+  color: var(--color-text-gray);
 }
 
-/* Hide elements for screen readers only */
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border-width: 0;
+.segmented-toggle .toggle-pill.active {
+  background: var(--color-primary);
+  color: white;
 }
 
-/* Toast notification animations */
+/* Price indicators */
+.price-up {
+  color: var(--color-price-up);
+}
+
+.price-down {
+  color: var(--color-price-down);
+}
+
+/* Crop image placeholder */
+.crop-img-placeholder {
+  background: linear-gradient(135deg, #1B5E3B 0%, #2E7D32 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+}
+
+/* Bottom nav */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 430px;
+  background: white;
+  border-top: 1px solid var(--color-border);
+  z-index: 50;
+}
+
+/* Indian Flag Footer Strip */
+.tricolor-strip {
+  position: fixed;
+  bottom: 68px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 430px;
+  z-index: 49;
+}
+
+/* Green header */
+.green-header {
+  background: var(--color-primary);
+  padding: 16px 20px 20px;
+  color: white;
+}
+
+/* Toast animations */
 @keyframes fadeInDown {
   from {
     opacity: 0;
@@ -118,45 +186,27 @@ html {
   }
 }
 
-/* Green wave mode transition overlay */
-.mode-transition-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 9998;
-  background: radial-gradient(circle at center, #046A38 0%, transparent 70%);
-  pointer-events: none;
-  animation: greenWave 0.6s ease-out forwards;
-}
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
 
-@keyframes greenWave {
-  0% {
-    opacity: 0;
-    transform: scale(0.3);
-  }
-
-  50% {
-    opacity: 0.4;
-    transform: scale(1.2);
-  }
-
-  100% {
-    opacity: 0;
-    transform: scale(2);
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
 
-/* PWA install prompt styling */
-.pwa-install-banner {
-  position: fixed;
-  bottom: 80px;
-  left: 16px;
-  right: 16px;
-  z-index: 100;
-  padding: 16px;
-  border-radius: 16px;
-  background: linear-gradient(135deg, #046A38 0%, #FF6200 100%);
-  color: #FFF;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-  font-family: var(--font-hindi);
-  text-align: center;
+/* SR only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
 }

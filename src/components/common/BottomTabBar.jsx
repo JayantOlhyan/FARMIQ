@@ -1,61 +1,42 @@
 import { NavLink } from "react-router-dom";
-import { useTranslation } from "react-i18next";
-import { motion } from "framer-motion";
+import { Home, Sprout, BarChart3, User } from "lucide-react";
 
 const tabs = [
-    { path: "/home", icon: "🌾", labelKey: "navHome" },
-    { path: "/crops", icon: "🌿", labelKey: "navCrops" },
-    { path: "/mandi", icon: "📊", labelKey: "navMandi" },
-    { path: "/voice", icon: "💬", labelKey: "navCommunity" },
+    { to: "/home", icon: Home, label: "घर" },
+    { to: "/crops", icon: Sprout, label: "फसल" },
+    { to: "/mandi", icon: BarChart3, label: "भाव" },
+    { to: "/profile", icon: User, label: "मैं" },
 ];
 
 export default function BottomTabBar() {
-    const { t } = useTranslation();
     return (
-        <nav
-            className="fixed bottom-0 left-0 right-0 z-50 border-t"
-            style={{
-                backgroundColor: "#FFFFFF",
-                borderColor: "#E5E5E5",
-                boxShadow: "0 -2px 10px rgba(0,0,0,0.08)",
-            }}
-        >
-            <div className="flex justify-around items-center max-w-lg mx-auto">
-                {tabs.map((tab) => (
+        <nav className="bottom-nav" style={{ height: 68 }}>
+            <div className="flex items-center justify-around h-full px-2">
+                {tabs.map(({ to, icon: Icon, label }) => (
                     <NavLink
-                        key={tab.path}
-                        to={tab.path}
-                        className="flex-1"
-                        style={{ textDecoration: "none" }}
+                        key={to}
+                        to={to}
+                        className={({ isActive }) =>
+                            `flex flex-col items-center justify-center gap-1 min-w-[64px] min-h-[64px] no-underline transition-colors ${isActive ? "text-[#1B5E3B]" : "text-[#999]"
+                            }`
+                        }
                     >
                         {({ isActive }) => (
-                            <motion.div
-                                whileTap={{ scale: 0.95 }}
-                                className="flex flex-col items-center py-2 px-1"
-                                style={{ minHeight: "64px", justifyContent: "center" }}
-                            >
-                                <span className="text-2xl mb-1">{tab.icon}</span>
+                            <>
+                                <Icon size={24} strokeWidth={isActive ? 2.5 : 1.8} />
                                 <span
-                                    className="text-xs font-bold"
+                                    className="text-[11px]"
                                     style={{
                                         fontFamily: "var(--font-hindi)",
-                                        color: isActive ? "#FF6200" : "#666",
-                                        fontSize: "13px",
+                                        fontWeight: isActive ? 700 : 400,
                                     }}
                                 >
-                                    {t(tab.labelKey)}
+                                    {label}
                                 </span>
                                 {isActive && (
-                                    <motion.div
-                                        layoutId="activeTab"
-                                        className="absolute bottom-0 h-1 rounded-t-full"
-                                        style={{
-                                            backgroundColor: "#FF6200",
-                                            width: "40px",
-                                        }}
-                                    />
+                                    <span className="block w-1 h-1 rounded-full bg-[#1B5E3B] mt-[-2px]" />
                                 )}
-                            </motion.div>
+                            </>
                         )}
                     </NavLink>
                 ))}

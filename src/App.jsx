@@ -4,45 +4,37 @@ import useStore from "./store/useStore";
 import "./lib/i18n";
 
 // Common
-import Header from "./components/common/Header";
 import BottomTabBar from "./components/common/BottomTabBar";
 import TriColorFooter from "./components/common/TriColorFooter";
 
-// Phase 1
+// Pages
 import OnboardingScreen from "./pages/phase1/OnboardingScreen";
-import HomeP1 from "./pages/phase1/HomeP1";
-import CropLibrary from "./pages/phase1/CropLibrary";
+import HomeScreen from "./pages/phase1/HomeP1";
 import CropDetail from "./pages/phase1/CropDetail";
-import VoiceQA from "./pages/phase1/VoiceQA";
-import MandiP1 from "./pages/phase1/MandiP1";
-import TransportP1 from "./pages/phase1/TransportP1";
+import CropSelect from "./pages/phase1/CropSelect";
+import MandiRates from "./pages/phase1/MandiP1";
+import WeatherDiary from "./pages/phase1/WeatherDiary";
+import Statistics from "./pages/phase1/Statistics";
 import Settings from "./pages/phase1/Settings";
+import VoiceQA from "./pages/phase1/VoiceQA";
 
-// Phase 2
-import DashboardP2 from "./pages/phase2/DashboardP2";
-import AIChat from "./pages/phase2/AIChat";
-import CommunityForum from "./pages/phase2/CommunityForum";
-
-function AppLayout({ children, showFooter = true }) {
-  const { userMode } = useStore();
+function AppLayout({ children }) {
   return (
-    <div className="min-h-screen flex flex-col" style={{ backgroundColor: userMode === "phase1" ? "#FFF8F0" : "#FAFBFC" }}>
-      <Header />
-      <main className="flex-1">{children}</main>
-      {showFooter && <TriColorFooter />}
-      {userMode === "phase1" && <BottomTabBar />}
+    <div className="app-container">
+      {children}
+      <TriColorFooter />
+      <BottomTabBar />
     </div>
   );
 }
 
-// Page transition wrapper
-function PageTransition({ children }) {
+function PageWrap({ children }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 12 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -12 }}
-      transition={{ duration: 0.25, ease: "easeOut" }}
+      initial={{ opacity: 0, x: 20 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: -20 }}
+      transition={{ duration: 0.2, ease: "easeOut" }}
     >
       {children}
     </motion.div>
@@ -50,7 +42,7 @@ function PageTransition({ children }) {
 }
 
 function AppRoutes() {
-  const { onboardingComplete, userMode } = useStore();
+  const { onboardingComplete } = useStore();
 
   if (!onboardingComplete) {
     return (
@@ -63,115 +55,15 @@ function AppRoutes() {
   return (
     <AnimatePresence mode="wait">
       <Routes>
-        {/* Home — mode aware */}
-        <Route
-          path="/home"
-          element={
-            <AppLayout>
-              <PageTransition>
-                {userMode === "phase1" ? <HomeP1 /> : <DashboardP2 />}
-              </PageTransition>
-            </AppLayout>
-          }
-        />
-
-        {/* Crops */}
-        <Route
-          path="/crops"
-          element={
-            <AppLayout>
-              <PageTransition>
-                <CropLibrary />
-              </PageTransition>
-            </AppLayout>
-          }
-        />
-        <Route
-          path="/crops/:id"
-          element={
-            <AppLayout>
-              <PageTransition>
-                <CropDetail />
-              </PageTransition>
-            </AppLayout>
-          }
-        />
-
-        {/* Voice Q&A (Phase 1) */}
-        <Route
-          path="/voice"
-          element={
-            userMode === "phase1" ? (
-              <VoiceQA />
-            ) : (
-              <Navigate to="/chat" replace />
-            )
-          }
-        />
-
-        {/* AI Chat (Phase 2) */}
-        <Route
-          path="/chat"
-          element={
-            userMode === "phase2" ? (
-              <AppLayout showFooter={false}>
-                <AIChat />
-              </AppLayout>
-            ) : (
-              <Navigate to="/voice" replace />
-            )
-          }
-        />
-
-        {/* Mandi */}
-        <Route
-          path="/mandi"
-          element={
-            <AppLayout>
-              <PageTransition>
-                <MandiP1 />
-              </PageTransition>
-            </AppLayout>
-          }
-        />
-
-        {/* Community */}
-        <Route
-          path="/community"
-          element={
-            <AppLayout>
-              <PageTransition>
-                <CommunityForum />
-              </PageTransition>
-            </AppLayout>
-          }
-        />
-
-        {/* Transport */}
-        <Route
-          path="/transport"
-          element={
-            <AppLayout>
-              <PageTransition>
-                <TransportP1 />
-              </PageTransition>
-            </AppLayout>
-          }
-        />
-
-        {/* Settings */}
-        <Route
-          path="/settings"
-          element={
-            <AppLayout>
-              <PageTransition>
-                <Settings />
-              </PageTransition>
-            </AppLayout>
-          }
-        />
-
-        {/* Default redirect */}
+        <Route path="/home" element={<AppLayout><PageWrap><HomeScreen /></PageWrap></AppLayout>} />
+        <Route path="/crops" element={<AppLayout><PageWrap><CropSelect /></PageWrap></AppLayout>} />
+        <Route path="/crops/:id" element={<AppLayout><PageWrap><CropDetail /></PageWrap></AppLayout>} />
+        <Route path="/mandi" element={<AppLayout><PageWrap><MandiRates /></PageWrap></AppLayout>} />
+        <Route path="/weather" element={<AppLayout><PageWrap><WeatherDiary /></PageWrap></AppLayout>} />
+        <Route path="/statistics" element={<AppLayout><PageWrap><Statistics /></PageWrap></AppLayout>} />
+        <Route path="/voice" element={<VoiceQA />} />
+        <Route path="/settings" element={<AppLayout><PageWrap><Settings /></PageWrap></AppLayout>} />
+        <Route path="/profile" element={<AppLayout><PageWrap><Settings /></PageWrap></AppLayout>} />
         <Route path="*" element={<Navigate to="/home" replace />} />
       </Routes>
     </AnimatePresence>
