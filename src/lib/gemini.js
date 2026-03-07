@@ -2,11 +2,11 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 
 // ============================================
 // FarmIQ Gemini API Client — Section 4.3 + Section 7
-// API Key is NEVER hardcoded. Read from localStorage only.
+// Reads API key from env variable (for deployment) or localStorage (user override)
 // ============================================
 
 export function getGeminiClient() {
-    const apiKey = localStorage.getItem("farmiq_gemini_key");
+    const apiKey = import.meta.env.VITE_GEMINI_API_KEY || localStorage.getItem("farmiq_gemini_key");
     if (!apiKey) throw new Error("NO_API_KEY");
     return new GoogleGenerativeAI(apiKey);
 }
