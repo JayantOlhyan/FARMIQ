@@ -1,15 +1,16 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import FarmIQLogo from "../../components/common/FarmIQLogo";
 
 /**
- * Sprint 1, Fix #4 — Language Selection Screen
- * Full screen dark green, 10 Hindi/regional language pills.
- * Saves selection to localStorage under 'farmiq_lang'.
+ * Language Selection Screen — now with English + i18n integration
+ * Saves selection to localStorage and changes i18n language on select.
  */
 
 const languages = [
     { code: "hi", label: "हिंदी", flag: "🇮🇳" },
+    { code: "en", label: "English", flag: "🇬🇧" },
     { code: "pa", label: "ਪੰਜਾਬੀ", flag: "🇮🇳" },
     { code: "bn", label: "বাংলা", flag: "🇮🇳" },
     { code: "ta", label: "தமிழ்", flag: "🇮🇳" },
@@ -26,9 +27,12 @@ const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.05 } }
 
 export default function LanguageSelection({ onSelect }) {
     const [selected, setSelected] = useState("hi");
+    const { i18n } = useTranslation();
 
     const handleContinue = () => {
         localStorage.setItem("farmiq_lang", selected);
+        // Switch i18n language immediately
+        i18n.changeLanguage(selected);
         onSelect(selected);
     };
 
@@ -85,7 +89,7 @@ export default function LanguageSelection({ onSelect }) {
                             borderRadius: "50px",
                             fontSize: "15px",
                             fontWeight: 600,
-                            fontFamily: "var(--font-hindi)",
+                            fontFamily: lang.code === "en" ? "var(--font-english)" : "var(--font-hindi)",
                             minHeight: "48px",
                             background: selected === lang.code
                                 ? "linear-gradient(135deg, #FFD700 0%, #FFA000 100%)"
@@ -114,11 +118,11 @@ export default function LanguageSelection({ onSelect }) {
                 style={{
                     background: "linear-gradient(135deg, #FFD700 0%, #FFA000 100%)",
                     color: "#14472D",
-                    fontFamily: "var(--font-hindi)",
+                    fontFamily: selected === "en" ? "var(--font-english)" : "var(--font-hindi)",
                     boxShadow: "0 6px 24px rgba(255,215,0,0.3)",
                 }}
             >
-                आगे बढ़ें →
+                {selected === "en" ? "Continue →" : "आगे बढ़ें →"}
             </motion.button>
 
             {/* Bottom text */}
@@ -127,9 +131,9 @@ export default function LanguageSelection({ onSelect }) {
                 animate={{ opacity: 0.5 }}
                 transition={{ delay: 0.8 }}
                 className="text-[12px] text-white/50 mt-6 text-center"
-                style={{ fontFamily: "var(--font-hindi)" }}
+                style={{ fontFamily: selected === "en" ? "var(--font-english)" : "var(--font-hindi)" }}
             >
-                बाद में Settings से भाषा बदल सकते हैं
+                {selected === "en" ? "You can change the language later from Settings" : "बाद में Settings से भाषा बदल सकते हैं"}
             </motion.p>
         </div>
     );

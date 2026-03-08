@@ -1,16 +1,17 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { WifiOff, Wifi } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 /**
- * Offline Status Banner — Sprint 1, Fix #1
- * Shows amber strip at top when offline, green '✅ वापस जुड़ गए!' when reconnected.
- * Auto-hides the reconnected message after 3 seconds.
+ * Offline Status Banner — Sprint 1, Fix #1 (now with i18n)
  */
 export default function OfflineBanner() {
     const [isOnline, setIsOnline] = useState(navigator.onLine);
     const [showReconnected, setShowReconnected] = useState(false);
     const [wasOffline, setWasOffline] = useState(false);
+    const { t, i18n } = useTranslation();
+    const font = i18n.language === "en" ? "var(--font-english)" : "var(--font-hindi)";
 
     useEffect(() => {
         const handleOnline = () => {
@@ -48,8 +49,8 @@ export default function OfflineBanner() {
                     className="offline-banner offline-banner--offline"
                 >
                     <WifiOff size={16} />
-                    <span style={{ fontFamily: "var(--font-hindi)" }}>
-                        इंटरनेट कनेक्शन नहीं है
+                    <span style={{ fontFamily: font }}>
+                        {t("offline")}
                     </span>
                 </motion.div>
             )}
@@ -64,8 +65,8 @@ export default function OfflineBanner() {
                     className="offline-banner offline-banner--online"
                 >
                     <Wifi size={16} />
-                    <span style={{ fontFamily: "var(--font-hindi)" }}>
-                        ✅ वापस जुड़ गए!
+                    <span style={{ fontFamily: font }}>
+                        {t("backOnline")}
                     </span>
                 </motion.div>
             )}

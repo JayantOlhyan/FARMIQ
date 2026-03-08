@@ -44,6 +44,25 @@ const resources = {
             bookTransport: "गाड़ी बुलाएँ",
             addMoreCrops: "+ और फसल",
             learnMore: "और जानें",
+            greeting: "🙏 नमस्ते, किसान भाई!",
+            searchCropPlaceholder: "फसल खोजें...",
+            quickActionsTitle: "जल्दी जानें",
+            myCrops: "मेरी फसलें",
+            viewAll: "सभी देखें",
+            sowing: "बुवाई",
+            fertilizer: "खाद",
+            pests: "कीड़े",
+            mandiLabel: "मंडी",
+            aiTip: "AI tip: आज गेहूँ में पानी देना अच्छा रहेगा। 💧",
+            cloudy: "बादल छाए हैं",
+            sunrise: "सूर्योदय",
+            sunset: "सूर्यास्त",
+            humidity: "नमी",
+            rain: "बारिश",
+            pressure: "दबाव",
+            wind: "हवा",
+            location: "उन्नाव, उत्तर प्रदेश",
+            addToCrops: "🌾 मेरी फसल में जोड़ें",
 
             // Crop Library
             searchCrop: "फसल का नाम लिखें...",
@@ -62,6 +81,14 @@ const resources = {
             tabHarvest: "कटाई",
             aiAdvice: "🤖 मेरे लिए खाद सलाह",
             photoIdentify: "📷 फोटो दिखाकर पहचानें",
+            cropDetailTitle: "फसल की जानकारी",
+            available: "उपलब्ध है ✓",
+            pestDiagnosis: "🔍 कीड़ा/बीमारी पहचानें",
+            diagnosing: "जांच हो रही है...",
+            shareWhatsApp: "WhatsApp पर भेजें",
+            info: "जानकारी",
+            readMore: "...और पढ़ें",
+            alsoSee: "यह भी देखें",
 
             // Voice Q&A
             voiceListening: "बोलिए, मैं सुन रहा हूँ...",
@@ -72,6 +99,12 @@ const resources = {
             voiceSuggestion3: "कौन सी खाद डालें?",
 
             // Mandi
+            allMandiRates: "सभी मंडी भाव",
+            todayRates: "आज के भाव",
+            todayPrice: "आज का भाव",
+            seePrice: "भाव देखें",
+            pullToRefresh: "नीचे खींचकर अपडेट करें",
+            refreshing: "अपडेट हो रहा है...",
             perQuintal: "/क्विंटल",
             priceUp: "से बढ़ा",
             priceDown: "से घटा",
@@ -94,10 +127,34 @@ const resources = {
             saveKey: "सेव करें",
             keySaved: "✅ Key सेव हो गई!",
             language: "भाषा",
+            profileComplete: "प्रोफ़ाइल {{percent}}% पूरा",
+            nextStep: "अगला कदम: {{step}}",
+            profileDone: "🎉 प्रोफ़ाइल पूरा है!",
+            back: "वापस",
+            aboutFarmIQ: "FarmIQ के बारे में",
+            aboutDesc: "FarmIQ भारतीय किसानों के लिए बनाया गया एक AI-powered कृषि मंच है। यह Google Gemini AI की शक्ति से चलता है।",
+            selectLang: "भाषा चुनें",
+            addCrops: "फसल जोड़ें",
+            addApiKey: "API Key डालें",
+            fillState: "राज्य भरें",
+            soilType: "मिट्टी का प्रकार",
+            apiKeyDesc: "AI सुविधाओं के लिए Google Gemini API key ज़रूरी है",
 
             // Loading & Status
             loading: "जानकारी ला रहे हैं...",
             noData: "अभी जानकारी उपलब्ध नहीं",
+
+            // Offline Banner
+            offline: "इंटरनेट कनेक्शन नहीं है",
+            backOnline: "✅ वापस जुड़ गए!",
+
+            // Statistics
+            statsTitle: "आँकड़े",
+            cropGrowth: "फसल की बढ़त",
+            weekly: "साप्ताहिक",
+            communityTitle: "किसान समुदाय",
+            joinBtn: "जुड़ें",
+            cm: "सेमी",
 
             // Error Messages — Section 10.5
             errorNoInternet: "📴 नेटवर्क नहीं है। पुरानी जानकारी दिखा रहे हैं।",
@@ -124,6 +181,11 @@ const resources = {
             cropSarson: "सरसों",
             cropMoong: "मूँग",
 
+            // Crop Search
+            searchFarmPlaceholder: "फसल या किसान खोजें...",
+            farming: "खेती",
+            nursery: "नर्सरी",
+
             // Days
             monday: "सोमवार",
             tuesday: "मंगलवार",
@@ -148,11 +210,16 @@ const resources = {
             month12: "दिसंबर",
 
             // Community
-            communityTitle: "किसान समुदाय",
             askCommunity: "सवाल पूछें",
             trending: "चर्चा में",
             answered: "जवाब मिला",
             unanswered: "जवाब दें",
+
+            // Language Selection
+            chooseLanguage: "अपनी भाषा चुनें",
+            chooseLanguageSub: "Choose your language",
+            continueBtn: "आगे बढ़ें →",
+            changeLater: "बाद में Settings से भाषा बदल सकते हैं",
 
             // Footer
             madeInIndia: "🇮🇳 Made in India",
@@ -194,6 +261,25 @@ const resources = {
             bookTransport: "Book Transport",
             addMoreCrops: "+ Add Crop",
             learnMore: "Learn More",
+            greeting: "🙏 Hello, Farmer!",
+            searchCropPlaceholder: "Search crops...",
+            quickActionsTitle: "Quick Actions",
+            myCrops: "My Crops",
+            viewAll: "View All",
+            sowing: "Sowing",
+            fertilizer: "Fertilizer",
+            pests: "Pests",
+            mandiLabel: "Mandi",
+            aiTip: "AI tip: Today is a good day to water wheat. 💧",
+            cloudy: "Cloudy",
+            sunrise: "Sunrise",
+            sunset: "Sunset",
+            humidity: "Humidity",
+            rain: "Rain",
+            pressure: "Pressure",
+            wind: "Wind",
+            location: "Unnao, Uttar Pradesh",
+            addToCrops: "🌾 Add to My Crops",
 
             searchCrop: "Search crop name...",
             all: "All",
@@ -210,6 +296,14 @@ const resources = {
             tabHarvest: "Harvest",
             aiAdvice: "🤖 Get AI Fertilizer Advice",
             photoIdentify: "📷 Identify by Photo",
+            cropDetailTitle: "Crop Details",
+            available: "Available ✓",
+            pestDiagnosis: "🔍 Identify Pest / Disease",
+            diagnosing: "Diagnosing...",
+            shareWhatsApp: "Share on WhatsApp",
+            info: "Information",
+            readMore: "...Read more",
+            alsoSee: "Also See",
 
             voiceListening: "Speak, I'm listening...",
             voiceProcessing: "🌿 Finding your answer...",
@@ -218,6 +312,12 @@ const resources = {
             voiceSuggestion2: "How much water today?",
             voiceSuggestion3: "Which fertilizer to use?",
 
+            allMandiRates: "All Mandi Rates",
+            todayRates: "Today's Rates",
+            todayPrice: "Today's Price",
+            seePrice: "See Price",
+            pullToRefresh: "Pull down to refresh",
+            refreshing: "Refreshing...",
             perQuintal: "/quintal",
             priceUp: "increased",
             priceDown: "decreased",
@@ -238,9 +338,31 @@ const resources = {
             saveKey: "Save",
             keySaved: "✅ Key saved!",
             language: "Language",
+            profileComplete: "Profile {{percent}}% complete",
+            nextStep: "Next step: {{step}}",
+            profileDone: "🎉 Profile complete!",
+            back: "Back",
+            aboutFarmIQ: "About FarmIQ",
+            aboutDesc: "FarmIQ is an AI-powered agriculture platform built for Indian farmers. It is powered by Google Gemini AI.",
+            selectLang: "Select language",
+            addCrops: "Add crops",
+            addApiKey: "Add API Key",
+            fillState: "Fill your state",
+            soilType: "Soil type",
+            apiKeyDesc: "Google Gemini API key is required for AI features",
 
             loading: "Loading information...",
             noData: "Information not available right now",
+
+            offline: "No internet connection",
+            backOnline: "✅ Back online!",
+
+            statsTitle: "Statistics",
+            cropGrowth: "Crop Growth",
+            weekly: "Weekly",
+            communityTitle: "Farmer Community",
+            joinBtn: "Join",
+            cm: "cm",
 
             errorNoInternet: "You're offline. Showing cached data.",
             errorNoApiKey: "Add your Gemini API key in Settings to use AI features.",
@@ -264,20 +386,32 @@ const resources = {
             cropSarson: "Mustard",
             cropMoong: "Moong Dal",
 
+            searchFarmPlaceholder: "Search crops or farmers...",
+            farming: "Farming",
+            nursery: "Nursery",
+
             communityTitle: "Farmer Community",
             askCommunity: "Ask Question",
             trending: "Trending",
             answered: "Answered",
             unanswered: "Unanswered",
 
+            chooseLanguage: "Choose your language",
+            chooseLanguageSub: "Choose your language",
+            continueBtn: "Continue →",
+            changeLater: "You can change the language later from Settings",
+
             madeInIndia: "🇮🇳 Made in India",
         },
     },
 };
 
+// Read saved language from localStorage so it persists across reloads
+const savedLang = typeof window !== "undefined" ? localStorage.getItem("farmiq_lang") : null;
+
 i18n.use(initReactI18next).init({
     resources,
-    lng: "hi",
+    lng: savedLang || "hi",
     fallbackLng: "hi",
     interpolation: { escapeValue: false },
 });

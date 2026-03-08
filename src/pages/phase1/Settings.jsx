@@ -8,10 +8,11 @@ import useStore from "../../store/useStore";
 export default function Settings() {
     const { t, i18n } = useTranslation();
     const navigate = useNavigate();
+    const isEn = i18n.language === "en";
+    const font = isEn ? "var(--font-english)" : "var(--font-hindi)";
     const { selectedLanguage, setLanguage, userMode, myCrops, farmProfile } = useStore();
     const [apiKey, setApiKey] = useState("");
     const [saved, setSaved] = useState(false);
-    const isP1 = userMode === "phase1";
 
     useEffect(() => {
         const stored = localStorage.getItem("farmiq_gemini_key");
@@ -29,34 +30,36 @@ export default function Settings() {
     const handleLanguageChange = (lang) => {
         setLanguage(lang);
         i18n.changeLanguage(lang);
+        localStorage.setItem("farmiq_lang", lang);
     };
 
-    // Sprint 3: Profile completeness calculation
+    // Profile completeness
     const profileData = useMemo(() => {
         let score = 0;
         const total = 5;
         const missing = [];
 
         if (selectedLanguage) score++;
-        else missing.push("भाषा चुनें");
+        else missing.push(t("selectLang"));
 
         if (myCrops?.length > 0) score++;
-        else missing.push("फसल जोड़ें");
+        else missing.push(t("addCrops"));
 
         if (apiKey || localStorage.getItem("farmiq_gemini_key")) score++;
-        else missing.push("API Key डालें");
+        else missing.push(t("addApiKey"));
 
         if (farmProfile?.state) score++;
-        else missing.push("राज्य भरें");
+        else missing.push(t("fillState"));
 
         if (farmProfile?.soilType) score++;
-        else missing.push("मिट्टी का प्रकार");
+        else missing.push(t("soilType"));
 
         return { score, total, percent: Math.round((score / total) * 100), missing };
-    }, [selectedLanguage, myCrops, apiKey, farmProfile]);
+    }, [selectedLanguage, myCrops, apiKey, farmProfile, t]);
 
     const languages = [
         { code: "hi", label: "हिंदी", flag: "🇮🇳" },
+        { code: "en", label: "English", flag: "🇬🇧" },
         { code: "pa", label: "ਪੰਜਾਬੀ", flag: "🇮🇳" },
         { code: "bn", label: "বাংলা", flag: "🇮🇳" },
         { code: "ta", label: "தமிழ்", flag: "🇮🇳" },
@@ -64,7 +67,6 @@ export default function Settings() {
         { code: "mr", label: "मराठी", flag: "🇮🇳" },
         { code: "gu", label: "ગુજરાતી", flag: "🇮🇳" },
         { code: "kn", label: "ಕನ್ನಡ", flag: "🇮🇳" },
-        { code: "en", label: "English", flag: "🇬🇧" },
     ];
 
     return (
@@ -73,23 +75,20 @@ export default function Settings() {
                 <button
                     onClick={() => navigate(-1)}
                     className="flex items-center gap-2 border-0 bg-transparent cursor-pointer mb-4"
-                    style={{ color: "#666", fontFamily: "var(--font-hindi)" }}
+                    style={{ color: "#666", fontFamily: font }}
                 >
                     <ArrowLeft size={20} />
-                    <span className="text-base">वापस</span>
+                    <span className="text-base">{t("back")}</span>
                 </button>
 
                 <h1
                     className="text-2xl font-bold mb-6"
-                    style={{
-                        fontFamily: isP1 ? "var(--font-hindi)" : "var(--font-english)",
-                        color: "#1A1A2E",
-                    }}
+                    style={{ fontFamily: font, color: "#1A1A2E" }}
                 >
                     ⚙️ {t("settings")}
                 </h1>
 
-                {/* Sprint 3: Profile Completeness */}
+                {/* Profile Completeness */}
                 <div
                     className="rounded-xl p-5 mb-6"
                     style={{ backgroundColor: "#FFFFFF", border: "1px solid #E8E8E8" }}
@@ -99,15 +98,14 @@ export default function Settings() {
                             <User size={24} color="#1B5E3B" />
                         </div>
                         <div className="flex-1">
-                            <h2 className="text-[16px] font-bold text-[#1A1A1A]" style={{ fontFamily: "var(--font-hindi)" }}>
-                                प्रोफ़ाइल {profileData.percent}% पूरा
+                            <h2 className="text-[16px] font-bold text-[#1A1A1A]" style={{ fontFamily: font }}>
+                                {t("profileComplete", { percent: profileData.percent })}
                             </h2>
-                            <p className="text-[12px] text-[#666]" style={{ fontFamily: "var(--font-hindi)" }}>
-                                {profileData.missing.length > 0 ? `अगला कदम: ${profileData.missing[0]}` : "🎉 प्रोफ़ाइल पूरा है!"}
+                            <p className="text-[12px] text-[#666]" style={{ fontFamily: font }}>
+                                {profileData.missing.length > 0 ? t("nextStep", { step: profileData.missing[0] }) : t("profileDone")}
                             </p>
                         </div>
                     </div>
-                    {/* Progress bar */}
                     <div className="h-[8px] bg-[#F0F0F0] rounded-full overflow-hidden">
                         <motion.div
                             initial={{ width: 0 }}
@@ -131,8 +129,8 @@ export default function Settings() {
                     <h2 className="text-lg font-bold mb-1" style={{ fontFamily: "var(--font-english)", color: "#1A1A2E" }}>
                         🔑 {t("apiKeyLabel")}
                     </h2>
-                    <p className="text-sm mb-4" style={{ color: "#666", fontFamily: "var(--font-hindi)" }}>
-                        AI सुविधाओं के लिए Google Gemini API key ज़रूरी है
+                    <p className="text-sm mb-4" style={{ color: "#666", fontFamily: font }}>
+                        {t("apiKeyDesc")}
                     </p>
                     <input
                         type="password"
@@ -154,7 +152,7 @@ export default function Settings() {
                         style={{
                             backgroundColor: saved ? "#046A38" : "#FF6200",
                             color: "#FFF",
-                            fontFamily: "var(--font-hindi)",
+                            fontFamily: font,
                             minHeight: "52px",
                         }}
                     >
@@ -173,7 +171,7 @@ export default function Settings() {
                     className="rounded-xl p-5 mb-6"
                     style={{ backgroundColor: "#FFFFFF", border: "1px solid #E8E8E8" }}
                 >
-                    <h2 className="text-lg font-bold mb-3" style={{ fontFamily: "var(--font-hindi)", color: "#1A1A2E" }}>
+                    <h2 className="text-lg font-bold mb-3" style={{ fontFamily: font, color: "#1A1A2E" }}>
                         🌐 {t("language")}
                     </h2>
                     <div className="flex flex-wrap gap-2">
@@ -185,7 +183,7 @@ export default function Settings() {
                                 style={{
                                     backgroundColor: selectedLanguage === lang.code ? "#E8F5E9" : "#F5F5F5",
                                     border: selectedLanguage === lang.code ? "2px solid #1B5E3B" : "2px solid transparent",
-                                    fontFamily: "var(--font-hindi)",
+                                    fontFamily: lang.code === "en" ? "var(--font-english)" : "var(--font-hindi)",
                                     color: selectedLanguage === lang.code ? "#1B5E3B" : "#1A1A1A",
                                 }}
                             >
@@ -201,12 +199,11 @@ export default function Settings() {
                     className="rounded-xl p-5"
                     style={{ backgroundColor: "#FFFFFF", border: "1px solid #E8E8E8" }}
                 >
-                    <h2 className="text-lg font-bold mb-2" style={{ fontFamily: "var(--font-hindi)", color: "#1A1A2E" }}>
-                        ℹ️ FarmIQ के बारे में
+                    <h2 className="text-lg font-bold mb-2" style={{ fontFamily: font, color: "#1A1A2E" }}>
+                        ℹ️ {t("aboutFarmIQ")}
                     </h2>
-                    <p className="text-sm leading-relaxed" style={{ fontFamily: "var(--font-hindi)", color: "#666" }}>
-                        FarmIQ भारतीय किसानों के लिए बनाया गया एक AI-powered कृषि मंच है।
-                        यह Google Gemini AI की शक्ति से चलता है।
+                    <p className="text-sm leading-relaxed" style={{ fontFamily: font, color: "#666" }}>
+                        {t("aboutDesc")}
                     </p>
                     <p className="text-xs mt-3" style={{ color: "#999" }}>
                         Version 2.0 • Team: Hack Homies • Elite Hack 1.0

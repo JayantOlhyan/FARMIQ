@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Search, Mic, Star, Heart, MapPin, User, MoreHorizontal } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import PageHeader from "../../components/common/Header";
 
-const farms = [
+const farmsHi = [
     {
         name: "हरी भरी खेती — उन्नाव", owner: "राम सिंह यादव", loc: "उन्नाव, उत्तर प्रदेश",
         img: "/images/farmer.png", rating: 4.8, price: "₹1,800 – ₹2,400 / क्विंटल",
@@ -19,22 +20,41 @@ const farms = [
     },
 ];
 
+const farmsEn = [
+    {
+        name: "Green Fields — Unnao", owner: "Ram Singh Yadav", loc: "Unnao, Uttar Pradesh",
+        img: "/images/farmer.png", rating: 4.8, price: "₹1,800 – ₹2,400 / quintal",
+    },
+    {
+        name: "Organic Garden — Nashik", owner: "Vijay Patil", loc: "Nashik, Maharashtra",
+        img: "/images/vegetables.png", rating: 4.8, price: "₹2,200 – ₹3,100 / quintal",
+    },
+    {
+        name: "Golden Fields — Jaipur", owner: "Harjeet Singh", loc: "Jaipur, Rajasthan",
+        img: "/images/mustard.png", rating: 4.6, price: "₹4,800 – ₹5,400 / quintal",
+    },
+];
+
 const fadeUp = { hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } };
 const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.08 } } };
 
 export default function CropSelect() {
     const [activeTab, setActiveTab] = useState("farming");
     const navigate = useNavigate();
+    const { t, i18n } = useTranslation();
+    const isEn = i18n.language === "en";
+    const font = isEn ? "var(--font-english)" : "var(--font-hindi)";
+    const farms = isEn ? farmsEn : farmsHi;
 
     return (
         <div className="pb-[88px] min-h-screen">
-            <PageHeader title="फसल चुनें" />
+            <PageHeader title={isEn ? "Select Crop" : "फसल चुनें"} />
 
             <div className="px-5 mt-2">
                 {/* Toggle */}
                 <div className="segmented-toggle mb-4">
-                    <button className={`toggle-pill ${activeTab === "farming" ? "active" : ""}`} onClick={() => setActiveTab("farming")}>खेती</button>
-                    <button className={`toggle-pill ${activeTab === "nursery" ? "active" : ""}`} onClick={() => setActiveTab("nursery")}>नर्सरी</button>
+                    <button className={`toggle-pill ${activeTab === "farming" ? "active" : ""}`} onClick={() => setActiveTab("farming")}>{t("farming")}</button>
+                    <button className={`toggle-pill ${activeTab === "nursery" ? "active" : ""}`} onClick={() => setActiveTab("nursery")}>{t("nursery")}</button>
                 </div>
 
                 {/* Search */}
@@ -42,9 +62,9 @@ export default function CropSelect() {
                     <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
                     <input
                         type="text"
-                        placeholder="फसल या किसान खोजें..."
+                        placeholder={t("searchFarmPlaceholder")}
                         className="w-full h-[48px] rounded-[16px] bg-white pl-11 pr-12 text-[14px] text-[#1A1A1A] outline-none shadow-sm"
-                        style={{ fontFamily: "var(--font-hindi)" }}
+                        style={{ fontFamily: font }}
                     />
                     <button className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center rounded-full bg-[#F0F7F2]">
                         <Mic size={18} className="text-[#1B5E3B]" />
@@ -62,7 +82,7 @@ export default function CropSelect() {
                         >
                             {/* Image */}
                             <div className="relative h-[180px]">
-                                <img src={farm.img} alt={farm.name} className="w-full h-full object-cover" />
+                                <img src={farm.img} alt={farm.name} className="w-full h-full object-cover" loading="lazy" />
                                 {/* Rating badge */}
                                 <div className="absolute top-3 left-3 flex items-center gap-1 bg-white/90 backdrop-blur-sm rounded-full px-2.5 py-1 shadow-sm">
                                     <Star size={13} fill="#F9A825" color="#F9A825" />
@@ -76,13 +96,13 @@ export default function CropSelect() {
 
                             {/* Info */}
                             <div className="p-4">
-                                <h3 className="text-[17px] font-bold text-[#1A1A1A]" style={{ fontFamily: "var(--font-hindi)" }}>{farm.name}</h3>
+                                <h3 className="text-[17px] font-bold text-[#1A1A1A]" style={{ fontFamily: font }}>{farm.name}</h3>
                                 <div className="flex items-center gap-4 mt-1.5">
                                     <div className="flex items-center gap-1 text-[13px] text-[#666]">
-                                        <User size={14} /> <span style={{ fontFamily: "var(--font-hindi)" }}>{farm.owner}</span>
+                                        <User size={14} /> <span style={{ fontFamily: font }}>{farm.owner}</span>
                                     </div>
                                     <div className="flex items-center gap-1 text-[13px] text-[#666]">
-                                        <MapPin size={14} /> <span style={{ fontFamily: "var(--font-hindi)" }}>{farm.loc}</span>
+                                        <MapPin size={14} /> <span style={{ fontFamily: font }}>{farm.loc}</span>
                                     </div>
                                 </div>
                                 <p className="text-[15px] font-bold text-[#1B5E3B] mt-2" style={{ fontFamily: "var(--font-english)" }}>{farm.price}</p>

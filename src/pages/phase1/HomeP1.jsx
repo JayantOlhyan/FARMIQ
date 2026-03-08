@@ -1,30 +1,35 @@
 import { motion } from "framer-motion";
 import { Search, Mic, ChevronDown, Clock, FlaskConical, Bug, BarChart3 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import FarmIQLogo from "../../components/common/FarmIQLogo";
 import { formatIndianDate, formatShortDate } from "../../lib/dateFormat";
-
-const quickActions = [
-    { icon: Clock, label: "बुवाई", color: "#FF9933", bg: "#FFF3E0" },
-    { icon: FlaskConical, label: "खाद", color: "#1B5E3B", bg: "#E8F5E9" },
-    { icon: Bug, label: "कीड़े", color: "#C62828", bg: "#FFEBEE" },
-    { icon: BarChart3, label: "मंडी", color: "#1B5E3B", bg: "#E8F5E9" },
-];
-
-const myCrops = [
-    { name: "गेहूँ", img: "/images/wheat.png" },
-    { name: "धान", img: "/images/rice.png" },
-    { name: "सरसों", img: "/images/mustard.png" },
-    { name: "गन्ना", img: "/images/sugarcane.png" },
-];
 
 const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.05 } } };
 const fadeUp = { hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.3 } } };
 
 export default function HomeScreen() {
     const navigate = useNavigate();
+    const { t, i18n } = useTranslation();
+    const isEn = i18n.language === "en";
     const today = new Date();
-    const dateStr = formatIndianDate(today);
+    const dateStr = isEn
+        ? today.toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric", weekday: "long" })
+        : formatIndianDate(today);
+
+    const quickActions = [
+        { icon: Clock, label: t("sowing"), color: "#FF9933", bg: "#FFF3E0" },
+        { icon: FlaskConical, label: t("fertilizer"), color: "#1B5E3B", bg: "#E8F5E9" },
+        { icon: Bug, label: t("pests"), color: "#C62828", bg: "#FFEBEE" },
+        { icon: BarChart3, label: t("mandiLabel"), color: "#1B5E3B", bg: "#E8F5E9" },
+    ];
+
+    const myCrops = [
+        { name: t("cropGehun"), img: "/images/wheat.png", key: "wheat" },
+        { name: t("cropDhan"), img: "/images/rice.png", key: "rice" },
+        { name: t("cropSarson"), img: "/images/mustard.png", key: "mustard" },
+        { name: t("cropGanna"), img: "/images/sugarcane.png", key: "sugarcane" },
+    ];
 
     return (
         <div className="pb-[88px]">
@@ -37,8 +42,8 @@ export default function HomeScreen() {
                     </div>
                 </div>
                 <div className="flex items-center gap-1 mb-2">
-                    <span className="text-[13px] text-white/80" style={{ fontFamily: "var(--font-hindi)" }}>
-                        🙏 नमस्ते, किसान भाई! • {dateStr}
+                    <span className="text-[13px] text-white/80" style={{ fontFamily: isEn ? "var(--font-english)" : "var(--font-hindi)" }}>
+                        {t("greeting")} • {dateStr}
                     </span>
                 </div>
 
@@ -47,9 +52,9 @@ export default function HomeScreen() {
                     <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
                     <input
                         type="text"
-                        placeholder="फसल खोजें..."
+                        placeholder={t("searchCropPlaceholder")}
                         className="w-full h-[48px] rounded-[16px] bg-white pl-11 pr-12 text-[14px] text-[#1A1A1A] outline-none"
-                        style={{ fontFamily: "var(--font-hindi)" }}
+                        style={{ fontFamily: isEn ? "var(--font-english)" : "var(--font-hindi)" }}
                     />
                     <button className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center rounded-full bg-[#F0F7F2]">
                         <Mic size={18} className="text-[#1B5E3B]" />
@@ -66,8 +71,8 @@ export default function HomeScreen() {
                     className="farmiq-card p-4 mb-5"
                 >
                     <div className="flex justify-between items-start">
-                        <div className="flex items-center gap-1 text-[13px] text-[#666]" style={{ fontFamily: "var(--font-hindi)" }}>
-                            <span>📍</span> उन्नाव, उत्तर प्रदेश
+                        <div className="flex items-center gap-1 text-[13px] text-[#666]" style={{ fontFamily: isEn ? "var(--font-english)" : "var(--font-hindi)" }}>
+                            <span>📍</span> {t("location")}
                         </div>
                         <span className="text-[28px]">🌙☁️</span>
                     </div>
@@ -85,32 +90,32 @@ export default function HomeScreen() {
                     {/* 4 stats */}
                     <div className="grid grid-cols-4 gap-2 mt-4 pt-3 border-t border-[#F0F0F0]">
                         {[
-                            { val: "76%", label: "नमी" },
-                            { val: "12%", label: "बारिश" },
-                            { val: "1013", label: "दबाव" },
-                            { val: "8km/h", label: "हवा" },
+                            { val: "76%", label: t("humidity") },
+                            { val: "12%", label: t("rain") },
+                            { val: "1013", label: t("pressure") },
+                            { val: "8km/h", label: t("wind") },
                         ].map((s) => (
                             <div key={s.label} className="text-center">
                                 <div className="text-[15px] font-bold text-[#1A1A1A]" style={{ fontFamily: "var(--font-english)" }}>{s.val}</div>
-                                <div className="text-[12px] text-[#666]" style={{ fontFamily: "var(--font-hindi)" }}>{s.label}</div>
+                                <div className="text-[12px] text-[#666]" style={{ fontFamily: isEn ? "var(--font-english)" : "var(--font-hindi)" }}>{s.label}</div>
                             </div>
                         ))}
                     </div>
 
                     {/* Sunrise/Sunset */}
                     <div className="flex items-center justify-between mt-4 pt-3 border-t border-[#F0F0F0]">
-                        <span className="text-[12px] text-[#666]" style={{ fontFamily: "var(--font-hindi)" }}>🌅 5:42 am सूर्योदय</span>
+                        <span className="text-[12px] text-[#666]" style={{ fontFamily: isEn ? "var(--font-english)" : "var(--font-hindi)" }}>🌅 5:42 am {t("sunrise")}</span>
                         <div className="flex-1 mx-3 h-[2px] border-t-2 border-dashed border-[#F9A825] relative">
                             <span className="absolute top-[-10px] left-1/2 -translate-x-1/2 text-[14px]">☀️</span>
                         </div>
-                        <span className="text-[12px] text-[#666]" style={{ fontFamily: "var(--font-hindi)" }}>🌇 7:18 pm सूर्यास्त</span>
+                        <span className="text-[12px] text-[#666]" style={{ fontFamily: isEn ? "var(--font-english)" : "var(--font-hindi)" }}>🌇 7:18 pm {t("sunset")}</span>
                     </div>
                 </motion.div>
 
                 {/* Quick Actions */}
                 <motion.div variants={stagger} initial="hidden" animate="visible">
-                    <h2 className="text-[17px] font-bold text-[#1A1A1A] mb-3" style={{ fontFamily: "var(--font-hindi)" }}>
-                        जल्दी जानें
+                    <h2 className="text-[17px] font-bold text-[#1A1A1A] mb-3" style={{ fontFamily: isEn ? "var(--font-english)" : "var(--font-hindi)" }}>
+                        {t("quickActionsTitle")}
                     </h2>
                     <div className="grid grid-cols-4 gap-3 mb-5">
                         {quickActions.map((a, i) => (
@@ -118,15 +123,15 @@ export default function HomeScreen() {
                                 key={i}
                                 variants={fadeUp}
                                 onClick={() => {
-                                    if (a.label === "मंडी") navigate("/mandi");
-                                    else if (a.label === "बुवाई") navigate("/crops");
+                                    if (a.label === t("mandiLabel")) navigate("/mandi");
+                                    else if (a.label === t("sowing")) navigate("/crops");
                                 }}
                                 className="farmiq-card flex flex-col items-center justify-center py-4 min-h-[72px] active:scale-95 transition-transform"
                             >
                                 <div className="w-[40px] h-[40px] rounded-[12px] flex items-center justify-center mb-2" style={{ backgroundColor: a.bg }}>
                                     <a.icon size={22} color={a.color} />
                                 </div>
-                                <span className="text-[12px] text-[#1A1A1A] font-medium" style={{ fontFamily: "var(--font-hindi)" }}>
+                                <span className="text-[12px] text-[#1A1A1A] font-medium" style={{ fontFamily: isEn ? "var(--font-english)" : "var(--font-hindi)" }}>
                                     {a.label}
                                 </span>
                             </motion.button>
@@ -137,26 +142,26 @@ export default function HomeScreen() {
                 {/* My Crops */}
                 <motion.div variants={fadeUp} initial="hidden" animate="visible">
                     <div className="flex items-center justify-between mb-3">
-                        <h2 className="text-[17px] font-bold text-[#1A1A1A]" style={{ fontFamily: "var(--font-hindi)" }}>
-                            मेरी फसलें
+                        <h2 className="text-[17px] font-bold text-[#1A1A1A]" style={{ fontFamily: isEn ? "var(--font-english)" : "var(--font-hindi)" }}>
+                            {t("myCrops")}
                         </h2>
                         <button
                             onClick={() => navigate("/crops")}
                             className="text-[13px] text-[#1B5E3B] font-semibold"
-                            style={{ fontFamily: "var(--font-hindi)" }}
+                            style={{ fontFamily: isEn ? "var(--font-english)" : "var(--font-hindi)" }}
                         >
-                            सभी देखें
+                            {t("viewAll")}
                         </button>
                     </div>
                     <div className="flex gap-3 overflow-x-auto hide-scrollbar pb-2">
                         {myCrops.map((crop, i) => (
                             <button
                                 key={i}
-                                onClick={() => navigate(`/crops/${crop.name === "गेहूँ" ? "wheat" : crop.name === "धान" ? "rice" : crop.name === "सरसों" ? "mustard" : "sugarcane"}`)}
+                                onClick={() => navigate(`/crops/${crop.key}`)}
                                 className="flex-shrink-0 rounded-[12px] overflow-hidden shadow-sm active:scale-95 transition-transform"
                                 style={{ width: 140, height: 100 }}
                             >
-                                <img src={crop.img} alt={crop.name} className="w-full h-full object-cover" />
+                                <img src={crop.img} alt={crop.name} className="w-full h-full object-cover" loading="lazy" />
                             </button>
                         ))}
                     </div>
@@ -172,19 +177,19 @@ export default function HomeScreen() {
                     style={{ background: "#1B5E3B" }}
                 >
                     <div className="flex justify-between items-start">
-                        <span className="text-[13px] text-white/80" style={{ fontFamily: "var(--font-hindi)" }}>
-                            उन्नाव, उत्तर प्रदेश — {formatShortDate(today)} {today.getFullYear()}
+                        <span className="text-[13px] text-white/80" style={{ fontFamily: isEn ? "var(--font-english)" : "var(--font-hindi)" }}>
+                            {t("location")} — {isEn ? today.toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" }) : `${formatShortDate(today)} ${today.getFullYear()}`}
                         </span>
                         <span className="text-[18px]">☀️</span>
                     </div>
                     <div className="flex items-end gap-3 mt-2">
                         <span className="text-[40px] font-bold text-white leading-none" style={{ fontFamily: "var(--font-english)" }}>33°C</span>
-                        <span className="text-[15px] text-white/80 mb-1" style={{ fontFamily: "var(--font-hindi)" }}>बादल छाए हैं</span>
+                        <span className="text-[15px] text-white/80 mb-1" style={{ fontFamily: isEn ? "var(--font-english)" : "var(--font-hindi)" }}>{t("cloudy")}</span>
                     </div>
                     <div className="text-[14px] text-white/70 mt-1" style={{ fontFamily: "var(--font-english)" }}>Humidity 76%</div>
                     <div className="border-t border-white/20 mt-3 pt-3">
-                        <p className="text-[14px] text-white italic" style={{ fontFamily: "var(--font-hindi)" }}>
-                            AI tip: आज गेहूँ में पानी देना अच्छा रहेगा। 💧
+                        <p className="text-[14px] text-white italic" style={{ fontFamily: isEn ? "var(--font-english)" : "var(--font-hindi)" }}>
+                            {t("aiTip")}
                         </p>
                     </div>
                 </motion.div>

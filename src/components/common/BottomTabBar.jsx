@@ -1,14 +1,19 @@
 import { NavLink } from "react-router-dom";
 import { Home, Sprout, BarChart3, User } from "lucide-react";
-
-const tabs = [
-    { to: "/home", icon: Home, label: "घर" },
-    { to: "/crops", icon: Sprout, label: "फसल" },
-    { to: "/mandi", icon: BarChart3, label: "भाव" },
-    { to: "/profile", icon: User, label: "मैं" },
-];
+import { useTranslation } from "react-i18next";
 
 export default function BottomTabBar() {
+    const { t, i18n } = useTranslation();
+    const isEn = i18n.language === "en";
+    const font = isEn ? "var(--font-english)" : "var(--font-hindi)";
+
+    const tabs = [
+        { to: "/home", icon: Home, label: t("navHome") },
+        { to: "/crops", icon: Sprout, label: t("navCrops") },
+        { to: "/mandi", icon: BarChart3, label: t("navMandi") },
+        { to: "/profile", icon: User, label: isEn ? "Me" : "मैं" },
+    ];
+
     return (
         <nav className="bottom-nav" style={{ height: 68 }}>
             <div className="flex items-center justify-around h-full px-2">
@@ -27,7 +32,7 @@ export default function BottomTabBar() {
                                 <span
                                     className="text-[13px]"
                                     style={{
-                                        fontFamily: "var(--font-hindi)",
+                                        fontFamily: font,
                                         fontWeight: isActive ? 700 : 400,
                                     }}
                                 >
